@@ -319,6 +319,76 @@
     .prompt-card .big{font-size:36px;}
   }
 
+  /* ==========================================================
+     Responsive shell — phone layout above is untouched below
+     640px. From 640px up we drop the fixed-width "phone frame"
+     look and let the app use the real viewport; from 1024px up
+     the bottom tab bar becomes a persistent left rail like a
+     desktop web app, and list/grid content reflows into columns
+     so the extra width is actually used instead of stretching a
+     single narrow column down a tall page.
+     ========================================================== */
+
+  /* ---------- Tablet (600–1023px): transitional ---------- */
+  @media (min-width:600px){
+    .app{max-width:none; width:100%;}
+    header.top{padding-inline:clamp(20px,4vw,40px);}
+    main{
+      width:100%; max-width:920px; margin:0 auto;
+      padding:24px clamp(20px,4vw,40px) 110px;
+    }
+    nav.tabs{padding-inline:clamp(20px,4vw,40px);}
+
+    .track-grid{grid-template-columns:repeat(3,1fr);}
+    .track-card.found{grid-column:auto;}
+    .badge-grid{grid-template-columns:repeat(4,1fr);}
+    .cat-list{display:grid; grid-template-columns:repeat(2,1fr); gap:10px;}
+    .mode-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px;}
+    .reading-list{display:grid; grid-template-columns:repeat(2,1fr); gap:10px;}
+    .vocab-card{display:grid; grid-template-columns:repeat(2,1fr); column-gap:18px;}
+
+    .read-body{width:100%; max-width:760px; margin:0 auto;}
+  }
+
+  /* ---------- Laptop / desktop (1024px+): full shell ---------- */
+  @media (min-width:1024px){
+    .app{
+      display:grid;
+      grid-template-columns:232px minmax(0,1fr);
+      grid-template-rows:auto 1fr;
+      grid-template-areas:"header header" "nav main";
+      min-height:100dvh;
+    }
+    header.top{grid-area:header; padding:16px clamp(24px,3vw,48px);}
+    nav.tabs{
+      grid-area:nav;
+      flex-direction:column; align-items:stretch; justify-content:flex-start; gap:4px;
+      border-top:none; border-right:1px solid var(--line);
+      box-shadow:none;
+      padding:22px 14px calc(22px + env(safe-area-inset-bottom,0px));
+      position:sticky; top:0; align-self:start; height:100dvh; overflow-y:auto;
+    }
+    nav.tabs button{
+      flex-direction:row; justify-content:flex-start; gap:12px;
+      padding:11px 14px; border-radius:10px; font-size:13.5px;
+    }
+    nav.tabs button svg{width:19px; height:19px;}
+    main{
+      grid-area:main;
+      max-width:1120px; width:100%; margin:0 auto;
+      padding:32px clamp(28px,4vw,56px) 60px;
+    }
+
+    .track-grid{grid-template-columns:repeat(4,1fr);}
+    .badge-grid{grid-template-columns:repeat(6,1fr);}
+    .cat-list{grid-template-columns:repeat(3,1fr);}
+    .mode-grid{grid-template-columns:repeat(2,1fr);}
+    .reading-list{grid-template-columns:repeat(3,1fr);}
+    .vocab-card{grid-template-columns:repeat(2,1fr); column-gap:22px;}
+
+    .read-body{max-width:820px;}
+  }
+
 </style>
 </head>
 <body>
@@ -5505,7 +5575,7 @@ function renderLearn(){
       sec3.appendChild(gwrap);
     });
   }
-  var card = el('<div class="card"></div>');
+  var card = el('<div class="card vocab-card"></div>');
   catItems(learnView.cat).forEach(function(v){
     var isChar = v.trk==="chars";
     var row = el(
@@ -6065,7 +6135,7 @@ function renderJourneyStepDetail(step, steps, curIdx){
     if(CATS[cat].note){
       sec3.appendChild(el('<div class="teacher-note"><span class="seal hanzi">师</span><span>'+CATS[cat].note+'</span></div>'));
     }
-    var card = el('<div class="card"></div>');
+    var card = el('<div class="card vocab-card"></div>');
     catItems(cat).forEach(function(v){
       var row = el(
         '<div class="vocab-item">'+
