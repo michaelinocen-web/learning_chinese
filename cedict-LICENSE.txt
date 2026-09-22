@@ -1,0 +1,36 @@
+CC-CEDICT Chinese-English Dictionary Data — License & Attribution
+===================================================================
+
+The file cedict-data.js bundled with Mandarin Runway contains dictionary
+data derived from CC-CEDICT.
+
+Source of this copy:
+  npm package "cc-cedict" v1.1.1 (MIT-licensed CODE, published by edvardsr)
+  https://www.npmjs.com/package/cc-cedict
+  https://github.com/edvardsr/cc-cedict
+  Data snapshot bundled in that package, timestamped 2026-01-04.
+
+That package's data/all.js is itself a processed copy of:
+  CC-CEDICT
+  https://cc-cedict.org/
+  (originally published via MDBG: https://www.mdbg.net/chinese/dictionary?page=cc-cedict)
+
+CC-CEDICT license
+------------------
+CC-CEDICT is licensed under a Creative Commons Attribution-Share Alike 3.0
+License (CC BY-SA 3.0):
+  https://creativecommons.org/licenses/by-sa/3.0/
+
+Under that license you are free to share and adapt the material, provided
+you give appropriate credit, indicate if changes were made, and distribute
+any derivative works under the same license. This file exists to satisfy
+that attribution requirement for Mandarin Runway's redistribution of the
+data (parsed into a compact JSON array and converted from numbered to
+diacritic/toned pinyin — see the comment header of cedict-data.js for the
+exact transformation).
+
+Full CC-CEDICT credits and editor history:
+  https://cc-cedict.org/wiki/
+
+No warranty. The dictionary data is provided "as is"; see the CC BY-SA 3.0
+license terms linked above for the full legal text.

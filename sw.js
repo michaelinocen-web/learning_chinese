@@ -4,7 +4,7 @@
 // to fetch the Google Fonts stylesheet/files once (also cached below) and, only
 // when you're online, the optional speech-recognition feature in Shadowing.
 
-var CACHE_NAME = "mandarin-runway-v3";
+var CACHE_NAME = "mandarin-runway-v5";
 var CORE_ASSETS = [
   "./",
   "./index.html",
@@ -14,7 +14,12 @@ var CORE_ASSETS = [
   "./hanzi-writer.min.js",
   "./hanzi-stroke-data-hsk1.js",
   "./hanzi-stroke-data-hsk2.js",
-  "./hanzi-stroke-data-hsk3.js"
+  "./hanzi-stroke-data-hsk3.js",
+  "./worksheet-hsk1.pdf",
+  "./worksheet-hsk2.pdf",
+  "./worksheet-hsk3.pdf",
+  "./cedict-data.js",
+  "./cedict-LICENSE.txt"
 ];
 
 self.addEventListener("install", function(event){

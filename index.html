@@ -431,6 +431,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-4"/></svg>
       Progress
     </button>
+    <button data-tab="dict">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      Dictionary
+    </button>
   </nav>
 </div>
 
@@ -543,6 +547,30 @@ var CATS = {
   adv_topics:{trk:"adv", name:"Strategy & Innovation", desc:"Abstract, professional vocabulary for leadership"},
   ques:{trk:"found", name:"Question Forms", desc:"How to actually ask something",
     note:"Most learners can say things but freeze when they need to ask something. These eight patterns cover almost every question you'll need."},
+  convpro:{trk:"found", name:"Personal Pronouns", desc:"我/你/他/她/它 and their plurals — the words you'll use constantly from lesson one",
+    note:"Chinese personal pronouns are refreshingly simple once you see the pattern: there are only a few singular pronouns to learn, and you make every one of them plural by adding 们 (men) to the end — no separate word to memorize the way English needs \"I\" &rarr; \"we\" or \"he\" &rarr; \"they\". 我 (wǒ, I/me) becomes 我们 (wǒmen, we/us); 你 (nǐ, you) becomes 你们 (nǐmen, you all); 他/她/它 (tā, he/she/it — note all three sound IDENTICAL in speech, they only differ in the written character) become 他们/她们/它们, all still pronounced \"tāmen\". You'll also meet 您 (nín), the polite/formal version of \"you\" — use it for elders, strangers, teachers, or anyone you'd address respectfully; it does not pluralize with 们 (there's no \"nínmen\"). One more you'll hear a lot: 咱们 (zánmen) is a special \"we\" that explicitly includes the person you're talking to (\"you and I\"), while 我们 is neutral and may or may not include the listener depending on context."},
+  convbe:{trk:"found", name:"The Verb 是 (to be)", desc:"How 是 links nouns — and the one place English \"to be\" doesn't carry over",
+    note:"是 (shì) is Chinese's closest equivalent to the English verb \"to be,\" but its job is narrower than you'd expect: 是 links two NOUNS or noun phrases together (我是学生, \"I am a student\") — that's it. The single most common mistake English speakers make is reaching for 是 in front of an ADJECTIVE, the way English does (\"I am tall\"). In Chinese, adjectives already function as the whole predicate on their own — 我很高 (wǒ hěn gāo, \"I am tall\"), never 我是高. Linguists call this an adjective acting as a \"stative verb\": it doesn't need a linking verb at all. The 很 in 我很高 is a mild, mostly-meaningless linking word in this position, not a true \"very\" — you'll hear it in almost every plain adjective sentence, whether or not real emphasis is intended. To negate 是, use 不是 (bú shì); to negate a plain adjective, just put 不 directly in front of it (不高, \"not tall\") — no 是 involved on either side. Get this distinction automatic early, because it's one of the fastest \"tells\" of a beginner who's still translating from English in their head."},
+  convgreet:{trk:"found", name:"Greetings", desc:"你好/您好/早上好/再见/好久不见 — the small phrases that open and close every conversation",
+    note:"你好 (nǐ hǎo) is the all-purpose greeting you already know, appropriate any time of day, with almost anyone. 您好 (nín hǎo) swaps in the polite pronoun 您 for a more respectful register — use it with elders, teachers, service staff, or in any formal/professional first meeting. Time-of-day greetings exist too: 早上好 (zǎoshang hǎo, good morning) and 晚上好 (wǎnshang hǎo, good evening) — note there's no standalone \"good afternoon\" in everyday use the way English has one; 你好 covers that gap. 好久不见 (hǎojiǔ bú jiàn, \"long time no see\") is genuinely one of the most common phrases you'll hear reconnecting with anyone you haven't seen in a while. For goodbyes, 再见 (zàijiàn, literally \"see again\") is standard and works in any register; casual friends often use 拜拜 (báibái), borrowed straight from English \"bye-bye.\" As a rule of thumb: default to 你好/再见 with people your own age or status, and reach for 您好 whenever you'd naturally say \"sir\" or \"ma'am\" in English."},
+  convself:{trk:"found", name:"Introducing Myself", desc:"我叫.../我是.../我来自... — a natural self-introduction script",
+    note:"A basic self-introduction in Chinese chains together a small set of fixed patterns, in a natural order: 我叫 + [name] (\"my name is...\") is the standard way to give your name — 我姓 + [surname] is a narrower option if you only want to give your surname (你贵姓? \"what's your honorable surname?\" is the polite way to ask someone's). Then 我是 + [country]人 states your nationality (我是美国人, \"I'm American\"), 我来自 + [place] states where you're from, and 我是 + [occupation] states your job. Put together: \"你好，我叫王明，我是美国人，来自纽约，我是老师。很高兴认识你。\" (\"Hello, my name is Wang Ming, I'm American, I'm from New York, I'm a teacher. Nice to meet you.\") 很高兴认识你 (hěn gāoxìng rènshi nǐ, \"nice to meet you\") is the standard closing line after any first introduction — memorize it as one chunk. You don't need every piece every time; even just 我叫... plus 很高兴认识你 is a complete, natural introduction on its own."},
+  convother:{trk:"found", name:"Introducing Others", desc:"这是.../他叫.../那是我的朋友 — presenting someone else",
+    note:"Introducing someone else swaps the subject but reuses patterns you already know: 这是 + [person] (\"this is...\") introduces someone physically near you right now; 那是 + [person] (\"that is...\") introduces someone farther away or being pointed out at a distance — the same 这/那 (this/that) distinction you'll see everywhere else in Chinese. From there, 他/她叫 + [name] gives their name using the identical 叫 pattern from self-introductions, and 他/她是 + [relationship/role] states who they are to you (我同事, my colleague; 我朋友, my friend; 我哥哥, my older brother). A polite opener before introducing someone in a slightly more formal setting is 我来介绍一下 (wǒ lái jièshào yíxià, \"let me introduce...\"/\"allow me to introduce...\"). Put together: \"我来介绍一下，这是我朋友，小李。他是我的同事。\" (\"Let me introduce — this is my friend, Xiao Li. He's my colleague.\")"},
+  convstruct:{trk:"found", name:"Statements & Questions: The Big Picture", desc:"Basic word order, and the three main ways to ask a question — the overview everything else builds on",
+    note:"Chinese sentence order is Subject–Verb–Object, same as English, for the core of a sentence: 我喝茶 (wǒ hē chá, \"I drink tea\") maps word-for-word. Where Chinese differs sharply is that TIME and PLACE phrases always sit BEFORE the verb, never after — 我明天在家喝茶 is, word for word, \"I tomorrow at-home drink tea,\" not \"I drink tea at home tomorrow\" (see \"Word Order Basics\" for more on this). For questions, there are three main tools, and you'll use all three constantly: (1) add 吗 to the end of any plain statement to turn it into a yes/no question (你喝茶吗?, \"do you drink tea?\") — the simplest and most common method; (2) repeat the verb in positive-then-negative form, called \"A-not-A\" (你喝不喝茶?, literally \"you drink not-drink tea?\") — this works with 是 (是不是), adjectives (好不好), and most verbs, and is largely interchangeable with 吗, just slightly more conversational; (3) use a question word (什么, 谁, 哪个, 什么时候, 怎么) in the exact spot where the answer would go, rather than moving it to the front of the sentence the way English does — 你喝什么? (\"you drink what?\") not \"what do you drink?\". Learn this overview well and every question pattern taught elsewhere in this app — 呢, specific question words, yes/no forms — is really just a variation on one of these three tools."},
+  convyn:{trk:"found", name:"Yes/No Questions", desc:"Statement + 吗? — and how Chinese actually answers yes or no",
+    note:"The default way to ask a yes/no question is simply to add 吗 (ma) to the end of any statement — 你忙吗? (\"are you busy?\"), 你有时间吗? (\"do you have time?\"). (A-not-A, covered in \"Statements & Questions: The Big Picture,\" is the main alternative — the two are largely interchangeable, so this lesson focuses on 吗.) The part that surprises most beginners: Chinese has no single dedicated word for \"yes\" or \"no.\" Instead, you answer by echoing the key verb back, positive or negative: asked 是...吗?, answer 是 (yes) or 不是 (no); asked 有...吗?, answer 有 (yes) or 没有 (no — 有 is one of the few verbs negated with 没 instead of 不). For a statement without an obvious verb to echo, 对 (duì, \"right/correct\") and 不对 (bú duì, \"not right\") work as a general-purpose agree/disagree. This \"echo the verb\" habit is worth building early — it's completely different from English and trips up learners well past the beginner stage."},
+  convqw:{trk:"found", name:"Question Words", desc:"谁/什么/哪个/什么时候/怎么/怎么样 — who, what, which, when, how",
+    note:"The core question words: 谁 (shéi, who/whom — Chinese makes no distinction between the two the way formal English does, so 你要找谁? covers both \"who are you looking for\" and \"whom are you looking for\"); 什么 (shénme, what); 哪个 (nǎge, which one — used when picking from a specific set of options); 什么时候 (shénme shíhou, when, literally \"what time\"); and two different words for \"how\": 怎么 (zěnme) asks about method or manner (这个怎么用?, \"how do you use this?\"), while 怎么样 (zěnmeyàng) asks for an opinion or assessment (最近怎么样?, \"how's it going/how have things been?\") — mixing these two up is a very common intermediate slip. The single most important structural point, already introduced in \"Statements & Questions: The Big Picture\": question words STAY in the position the answer would occupy. English moves \"what\" to the front of the sentence (\"What do you drink?\"); Chinese doesn't move anything — 你喝什么? is literally \"you drink what?\", with 什么 sitting exactly where 茶 (tea) would sit in the answer. Once this clicks, question words stop feeling like a separate grammar topic and start feeling like ordinary vocabulary slotted into a sentence you already know how to build. (For 为什么/多少/几/哪儿, see \"Question Forms\".)"},
+  convne:{trk:"found", name:"呢 — Asking Back a Question", desc:"你呢? — \"and you?\" without repeating the whole question",
+    note:"呢 (ne) attached to the end of a phrase is one of the most useful shortcuts in casual Chinese: it bounces a question that was just asked back at the other person, without making you repeat the whole sentence. Someone asks how you are and you answer — you can close with 你呢? (\"and you?\"/\"what about you?\") instead of re-asking their full question — 我很好，你呢? (\"I'm good, and you?\"). It works after any noun, not just 你: attach it to whatever you want to ask \"about\" — 我是老师，你呢? (\"I'm a teacher, what about you?\"). 呢 can also, in context, ask \"where is ___\" when attached to a bare noun with no verb at all — 我的手机呢? (\"where's my phone?\", roughly \"my phone, [what about it]?\"). This is a genuinely high-frequency, easy-to-learn particle — 你呢? alone will carry you through an enormous amount of small talk."},
+  convposs:{trk:"found", name:"Possessive Particle 的", desc:"[owner] + 的 + [thing] — and when native speakers actually drop it",
+    note:"的 (de) is Chinese's all-purpose possessive/descriptive particle: put it between an owner and the thing they own — 我的书 (wǒ de shū, \"my book\") — or between a description and the noun it describes — 红色的车 (hóngsè de chē, \"the red car\"). It isn't limited to people owning things either: it links any noun to another noun it modifies, like 中国的首都 (\"China's capital\"). The honest nuance beginners rarely get told clearly: 的 is often DROPPED for close, inherent relationships — family members (我妈妈 and 我的妈妈 are both completely natural; native speakers say the shorter one constantly) and the group/organization you belong to (我们公司, \"our company,\" rarely 我们的公司). For less inherent relationships — friends, acquaintances, possessions — 的 is usually kept: 我的朋友, not 我朋友 (though you will hear 我朋友 too, especially in fast/casual speech — it's not wrong, just slightly less standard). There's no hard rule here, just a spectrum: the closer and more \"built-in\" the relationship, the more natural it is to drop 的. (的 has two look-alike cousins, 得 and 地, with completely different jobs — see \"The Three 的/得/地\" in Intermediate Core once this one feels automatic.)"},
+  convclose:{trk:"found", name:"Expressing Closeness", desc:"朋友/好朋友/最好的朋友/闺蜜/哥们儿 — talking about how close a relationship is",
+    note:"朋友 (péngyou) is the plain word for \"friend\"; stack on 好 to get 好朋友 (\"good friend\") or 最好的朋友 (\"best friend,\" reusing the 最 + adjective + 的 superlative pattern and the possessive 的 from the previous lesson — literally \"most-good 的 friend\"). Beyond that, colloquial Chinese has specific, gendered words for a truly close friend that don't map onto a single English word: 闺蜜 (guīmì) is a close female friend/\"bestie,\" used between women; 哥们儿 (gēmenr) is a close male friend/\"buddy,\" casual and Beijing-flavored; 死党 (sǐdǎng) is a loyal, ride-or-die friend of either gender — it looks dramatic (literally \"die-together gang\") but is used lightly, closer to \"partner in crime\" than anything sinister. To describe closeness more generally without a specific label, 关系 (guānxi, \"relationship\") is the workhorse word — 我们关系很好 (\"we have a good relationship/we're close\") works for friends, family, or colleagues alike."},
+  convtitle:{trk:"found", name:"Surname + Title", desc:"王老师/李医生/张经理 — the standard way to address people professionally",
+    note:"Where English defaults to \"Mr./Ms. + surname,\" Chinese defaults to SURNAME + TITLE/PROFESSION, and it's used constantly, not just in formal writing — you'll address people this way out loud, all the time: 王老师 (Wáng lǎoshī, \"Teacher Wang\") for a teacher, 李医生 (Lǐ yīshēng, \"Dr. Li\") for a doctor, 张经理 (Zhāng jīnglǐ, \"Manager Zhang\") for a manager, 陈老板 (Chén lǎobǎn, \"Boss Chen\") for a boss or shop owner — even 孙护士 (Sūn hùshi, \"Nurse Sun\") for a nurse. This pattern signals respect for the person's role, and it's considered warmer and more natural than a generic title alone. The one place English \"Mr./Ms.\" does carry over directly is 先生 (xiānsheng, Mr.) and 小姐/女士 (xiǎojiě/nǚshì, Miss/Ms. — 小姐 skews younger and more casual, 女士 is the safer formal default in mainland contexts) when there's no specific profession to reference. As a rule: if you know someone's job or role, lead with SURNAME + that title; reach for 先生/女士 only when you don't."},
   gbasic:{trk:"found", name:"Sentence Basics", desc:"是， 的， 有， and how to say \"not\"",
     note:"This is the skeleton of every Chinese sentence you'll ever build: no verb \"to be\" before adjectives, one all-purpose possessive particle, and two different words for \"not\" depending on tense. Get these four habits automatic and everything else gets easier."},
   gword:{trk:"found", name:"Word Order Basics", desc:"Time before place, place before verb — the fixed order English doesn't have",
@@ -563,7 +591,32 @@ var CATS = {
     note:"了 is the single most misused word by English-speaking learners, because English has no equivalent. It does NOT mean “past tense.” It marks completion or a change of state. Study these examples side by side, not in isolation."},
   comp:{trk:"adv", name:"Complements", desc:"Resultative, directional, and potential complements",
     note:"This is advanced grammar, but it's what makes sentences sound native instead of textbook. 看懂 (kàn + dǒng) isn't just “read,” it's “read AND understand” — the result is baked into the verb pair."},
-  compare:{trk:"inter", name:"Comparison", desc:"比， 跟...一样， and other ways to compare"}
+  compare:{trk:"inter", name:"Comparison", desc:"比， 跟...一样， and other ways to compare"},
+  charmethod:{trk:"chars", group:"Start Here", name:"How to Actually Learn Characters", desc:"Read this first — the study method that makes characters stick, before you dive into HSK1",
+    note:"Before memorizing individual characters, it's worth ten minutes learning HOW to memorize them — the difference between an efficient method and rote repetition is enormous over hundreds of characters. The seven ideas below are well-established in language-learning research, and they're the exact reasons this app is built the way it is (radicals, memory-hook stories, spaced review, and a writing-practice screen all exist because of the principles explained here). Skim this once, then start HSK1 below — and come back to it any time a batch of characters isn't sticking.",
+    groups:[
+      {label:"1. Learn components first, not whole glyphs", items:[
+        {sym:"部", desc:"Don't memorize a character as one flat picture. Nearly every character breaks down into a radical (a recurring meaning-component — 氵 water, 木 tree, 女 woman) plus additional pieces layered on top. Once you can recognize the most common radicals on sight, a character like 河 (river) stops being 8 unrelated strokes and becomes just \"water (氵) + 可 (for the sound)\" — two pieces you already know. This app's Character Detail screen shows the radical and its meaning for exactly this reason: read that field before you try to memorize the whole shape.", ex:[{h:"河",p:"hé",e:"river"},{h:"沙",p:"shā",e:"sand"}]}
+      ]},
+      {label:"2. Build a mnemonic story from the pieces", items:[
+        {sym:"忆", desc:"Once you can see the components, invent a small, vivid — even silly — story connecting them to the meaning; the weirder and more visual it is, the more it sticks. This is exactly what the \"Memory hook\" field on every character in this app already does: 好 (hǎo, good) is 女 (woman) + 子 (child) — a mother with her child, a picture of something good. You don't have to accept the app's story as-is — if you invent your own version, even a worse pun, it will often stick better than a story someone else handed you, because you built it yourself.", ex:[{h:"好",p:"hǎo",e:"good"},{h:"字",p:"zì",e:"character/word"}]}
+      ]},
+      {label:"3. Use spaced repetition — don't cram", items:[
+        {sym:"复", desc:"Cramming a character today and never seeing it again is close to useless — your brain discards what it isn't asked to retrieve again soon. This app schedules review automatically: every time you answer a character correctly in Practice, its next review is pushed further out (the mastery dots you see in Learn and Progress, and what makes something \"due\" for review, are that schedule made visible). Trust the system — reviewing a character for 20 seconds today, again in two days, again in a week, and again in three weeks builds far more durable memory than one long cram session, even though the total study time is similar or less.", ex:[]}
+      ]},
+      {label:"4. Active recall beats passive recognition", items:[
+        {sym:"想", desc:"Reading a character and nodding along (\"yep, I know that one\") feels like learning but barely moves the needle — recognizing something you're staring at is easy, and your brain doesn't have to do real retrieval work. Covering the character and trying to reproduce its pronunciation, meaning, or shape from memory — the way this app's quizzes and its \"Practice writing\" mode force you to — is dramatically more effective, even though it feels harder and slower in the moment. If a study method never makes you pause and genuinely try to recall something, it probably isn't building long-term memory.", ex:[]}
+      ]},
+      {label:"5. Practice writing it by hand", items:[
+        {sym:"写", desc:"Handwriting a character engages motor memory in addition to visual recognition — physically producing the stroke order gives your brain a second, independent way to retrieve the character later, so recognizing it by sight and being able to reproduce it reinforce each other. Use the \"Practice writing\" mode on any character's detail screen (it checks your strokes against the correct order) — printable stroke-order worksheets for offline handwriting practice are planned for a future update; until then, tracing a character a few times on scratch paper while saying it out loud works just as well.", ex:[{h:"写",p:"xiě",e:"to write"}]}
+      ]},
+      {label:"6. Learn characters inside words and sentences, not alone", items:[
+        {sym:"词", desc:"A character studied in isolation is an abstract shape with a dictionary definition; the same character studied as part of a real word, with an example sentence, is a piece of language you can actually use. That's why every character in this app comes with an example word, and many with a full example sentence — 学 (xué) means much more once you've seen it inside 学习 (xuéxí, to study) and 学生 (xuésheng, student) than it does as a flashcard on its own. When you review, say the example word out loud, not just the isolated character.", ex:[{h:"学",p:"xué",e:"to study"},{h:"学生",p:"xuésheng",e:"student"}]}
+      ]},
+      {label:"7. Pace yourself honestly", items:[
+        {sym:"程", desc:"Realistic expectations, honestly: HSK1's 178 characters are a genuine beginner milestone, not \"basic fluency\" — expect weeks of steady, spaced practice, not days. Comfortable reading takes real time to build: most learners need somewhere around 1,000–1,500+ characters before general reading starts feeling smooth rather than effortful, and that's normal, not slow. Consistency beats intensity — 10–15 minutes of spaced review most days will outperform an occasional multi-hour cram session by a wide margin over a few months. If a character isn't sticking after several reviews, that's completely normal too — give it a few more spaced passes rather than assuming something's wrong with your memory.", ex:[]}
+      ]}
+    ]}
 };
 
 // Tone quadruplets: same syllable across all four tones
@@ -1050,6 +1103,112 @@ var RAW_VOCAB = [
 ["gword","我常常迟到。","Wǒ chángcháng chídào.","I'm often late. (frequency adverbs like 常常 go before the verb)"],
 ["gword","他跟我一起去。","Tā gēn wǒ yìqǐ qù.","He's going together with me. (跟 + person + 一起 + verb: the \"with\" phrase comes before the verb)"],
 ["gword","我从纽约来。","Wǒ cóng Niǔyuē lái.","I come from New York. (从 \"from\" + place also sits before the verb)"],
+// ---- Conversation Basics: Personal Pronouns ----
+["convpro","我","wǒ","I / me"],
+["convpro","你","nǐ","you (informal, singular)"],
+["convpro","您","nín","you (polite/formal, singular — elders, strangers, superiors)"],
+["convpro","他","tā","he / him"],
+["convpro","她","tā","she / her"],
+["convpro","它","tā","it (animals, objects, abstract things)"],
+["convpro","我们","wǒmen","we / us (加 们 to 我 to pluralize)"],
+["convpro","你们","nǐmen","you all / you guys (plural you)"],
+["convpro","他们","tāmen","they / them (male or mixed group)"],
+["convpro","她们","tāmen","they / them (all-female group)"],
+["convpro","它们","tāmen","they / them (animals or objects)"],
+["convpro","咱们","zánmen","we / us (inclusive — explicitly includes the listener)"],
+// ---- Conversation Basics: The Verb 是 ----
+["convbe","我是学生。","Wǒ shì xuésheng.","I am a student. (是 links two NOUNS: subject + 是 + noun)"],
+["convbe","她是我的同事。","Tā shì wǒ de tóngshì.","She is my colleague. (是 + noun phrase)"],
+["convbe","这是中国茶。","Zhè shì Zhōngguó chá.","This is Chinese tea."],
+["convbe","我很高。","Wǒ hěn gāo.","I am tall. (NOT 我是高 — adjectives need no 是; 很 here is a mild linking word, not \"very\")"],
+["convbe","他很累。","Tā hěn lèi.","He is tired. (adjective alone as the whole predicate)"],
+["convbe","这个很贵。","Zhège hěn guì.","This is expensive. (again: no 是 before an adjective)"],
+["convbe","我不是老师。","Wǒ bú shì lǎoshī.","I'm not a teacher. (是 negated with 不: 不是)"],
+["convbe","我不高。","Wǒ bù gāo.","I'm not tall. (adjective negated directly with 不 — no 是 involved on either side)"],
+// ---- Conversation Basics: Greetings ----
+["convgreet","你好!","Nǐ hǎo!","Hello! (all-purpose, any time of day, anyone)"],
+["convgreet","您好!","Nín hǎo!","Hello! (formal/polite — elders, strangers, professional settings)"],
+["convgreet","早上好!","Zǎoshang hǎo!","Good morning!"],
+["convgreet","晚上好!","Wǎnshang hǎo!","Good evening!"],
+["convgreet","大家好!","Dàjiā hǎo!","Hello, everyone! (greeting a group)"],
+["convgreet","好久不见!","Hǎojiǔ bú jiàn!","Long time no see!"],
+["convgreet","最近怎么样?","Zuìjìn zěnmeyàng?","How have you been lately? (casual check-in)"],
+["convgreet","再见!","Zàijiàn!","Goodbye!"],
+["convgreet","明天见!","Míngtiān jiàn!","See you tomorrow!"],
+["convgreet","拜拜!","Báibái!","Bye-bye! (casual, borrowed from English)"],
+// ---- Conversation Basics: Introducing Myself ----
+["convself","我叫王明。","Wǒ jiào Wáng Míng.","My name is Wang Ming. (我叫 + full name: the standard way to give your name)"],
+["convself","我姓王。","Wǒ xìng Wáng.","My surname is Wang. (姓 + surname only, distinct from 叫 + full name)"],
+["convself","我是美国人。","Wǒ shì Měiguórén.","I am American. (我是 + [country]人: nationality pattern)"],
+["convself","我来自纽约。","Wǒ láizì Niǔyuē.","I come from New York. (来自 + place: where you're from)"],
+["convself","我是老师。","Wǒ shì lǎoshī.","I am a teacher. (我是 + occupation)"],
+["convself","很高兴认识你。","Hěn gāoxìng rènshi nǐ.","Nice to meet you. (standard closing line after any introduction)"],
+["convself","我今年三十岁。","Wǒ jīnnián sānshí suì.","I am thirty this year. (optional: age, only share when natural)"],
+// ---- Conversation Basics: Introducing Others ----
+["convother","这是我朋友，小李。","Zhè shì wǒ péngyou, Xiǎo Lǐ.","This is my friend, Xiao Li. (这是 + person: introducing someone right here)"],
+["convother","他叫大卫。","Tā jiào Dàwèi.","His name is David. (他/她叫 + name — same pattern as 我叫)"],
+["convother","她是我同事。","Tā shì wǒ tóngshì.","She is my colleague. (她是 + relationship/role)"],
+["convother","那是我哥哥。","Nà shì wǒ gēge.","That is my older brother. (那是 for someone farther away, vs. 这是 for someone right here)"],
+["convother","我来介绍一下。","Wǒ lái jièshào yíxià.","Let me introduce (someone). (polite opener before an introduction)"],
+["convother","他是我们的新同事。","Tā shì wǒmen de xīn tóngshì.","He is our new colleague."],
+// ---- Conversation Basics: Statements & Questions, the Big Picture ----
+["convstruct","我喝茶。","Wǒ hē chá.","I drink tea. (basic order: Subject + Verb + Object, same as English here)"],
+["convstruct","我明天在家喝茶。","Wǒ míngtiān zài jiā hē chá.","I'll drink tea at home tomorrow. (time + place slot in BEFORE the verb)"],
+["convstruct","你喝茶吗?","Nǐ hē chá ma?","Do you drink tea? (statement + 吗 = the simplest yes/no question)"],
+["convstruct","你喝不喝茶?","Nǐ hē bu hē chá?","Do you drink tea (or not)? (A-not-A: repeat the verb, negative in the middle)"],
+["convstruct","你喝什么?","Nǐ hē shénme?","What do you drink? (question word fills the SAME slot the answer would — it doesn't move to the front)"],
+["convstruct","你是不是学生?","Nǐ shì bu shì xuésheng?","Are you a student (or not)? (A-not-A works with 是 too: 是不是)"],
+["convstruct","这个好不好?","Zhège hǎo bu hǎo?","Is this good (or not)? (A-not-A with an adjective)"],
+// ---- Conversation Basics: Yes/No Questions ----
+["convyn","你忙吗?","Nǐ máng ma?","Are you busy? (statement + 吗, the default way to ask yes/no)"],
+["convyn","你是中国人吗?","Nǐ shì Zhōngguórén ma?","Are you Chinese?"],
+["convyn","你有时间吗?","Nǐ yǒu shíjiān ma?","Do you have time?"],
+["convyn","你想喝咖啡吗?","Nǐ xiǎng hē kāfēi ma?","Would you like to drink coffee?"],
+["convyn","是。","Shì.","Yes. (echo 是 back to answer yes to a 是 question)"],
+["convyn","不是。","Bú shì.","No. (echo 不是 — Chinese answers by echoing the verb; there's no single word for \"yes\"/\"no\")"],
+["convyn","对。","Duì.","Right / correct. (a general-purpose way to confirm, not tied to one verb)"],
+["convyn","不对。","Bú duì.","Not right / incorrect."],
+// ---- Conversation Basics: Question Words ----
+["convqw","谁是你的老师?","Shéi shì nǐ de lǎoshī?","Who is your teacher? (谁: who/whom — Chinese doesn't distinguish the two)"],
+["convqw","你要找谁?","Nǐ yào zhǎo shéi?","Who(m) are you looking for? (谁 sits in the object slot, right where the answer would go)"],
+["convqw","这是什么?","Zhè shì shénme?","What is this? (什么: what)"],
+["convqw","你喜欢哪个?","Nǐ xǐhuan nǎge?","Which one do you like? (哪个: which one, out of a set)"],
+["convqw","你什么时候回来?","Nǐ shénme shíhou huílái?","When are you coming back? (什么时候: when)"],
+["convqw","这个怎么用?","Zhège zěnme yòng?","How do you use this? (怎么: how, asking about method/manner)"],
+["convqw","最近怎么样?","Zuìjìn zěnmeyàng?","How's it going lately? (怎么样: how, asking for an opinion/assessment — a different job from 怎么)"],
+// ---- Conversation Basics: 呢 to Ask Back ----
+["convne","我很好，你呢?","Wǒ hěn hǎo, nǐ ne?","I'm good, and you? (呢 bounces the same question back — no need to repeat the whole sentence)"],
+["convne","我是老师，你呢?","Wǒ shì lǎoshī, nǐ ne?","I'm a teacher, what about you?"],
+["convne","我要喝茶，你呢?","Wǒ yào hē chá, nǐ ne?","I want tea, what about you? (呢 after a full statement = \"and you?\")"],
+["convne","我的手机呢?","Wǒ de shǒujī ne?","Where's my phone? (呢 after a bare noun can also ask \"where is ___\", understood from context)"],
+["convne","你呢?","Nǐ ne?","And you? / What about you? (the single most common use — a short reply to almost any statement about yourself)"],
+// ---- Conversation Basics: Possessive 的 ----
+["convposs","这是我的书。","Zhè shì wǒ de shū.","This is my book. ([owner] + 的 + [thing] — the basic possessive pattern)"],
+["convposs","这是谁的手机?","Zhè shì shéi de shǒujī?","Whose phone is this? (谁的 + noun: whose ___)"],
+["convposs","我妈妈","Wǒ māma","my mom (的 dropped: very close relationships often skip 的 — 我妈妈 and 我的妈妈 are both fine)"],
+["convposs","我的朋友","wǒ de péngyou","my friend (的 usually kept for friends/acquaintances — less automatically \"close\" than family)"],
+["convposs","我们公司","Wǒmen gōngsī","our company (的 often dropped for the group/organization you belong to)"],
+["convposs","红色的车","hóngsè de chē","the red car (的 also marks description: [adjective] + 的 + [noun], not just ownership)"],
+["convposs","中国的首都","Zhōngguó de shǒudū","China's capital (的 links any noun to another noun it modifies, not just people)"],
+// ---- Conversation Basics: Expressing Closeness ----
+["convclose","朋友","péngyou","friend"],
+["convclose","好朋友","hǎo péngyou","good friend"],
+["convclose","最好的朋友","zuì hǎo de péngyou","best friend (最 + adjective + 的: superlative, reusing the possessive 的 pattern)"],
+["convclose","闺蜜","guīmì","best female friend / \"bestie\" (used between close girlfriends specifically)"],
+["convclose","哥们儿","gēmenr","buddy / bro (casual, used between close male friends, very colloquial)"],
+["convclose","死党","sǐdǎng","ride-or-die friend (very close, loyal friend — literally \"die-together gang,\" used lightly)"],
+["convclose","我们关系很好。","Wǒmen guānxi hěn hǎo.","We have a good relationship / we're close. (关系: relationship)"],
+["convclose","他是我最好的朋友。","Tā shì wǒ zuì hǎo de péngyou.","He is my best friend."],
+// ---- Conversation Basics: Surname + Title ----
+["convtitle","王老师","Wáng lǎoshī","Teacher Wang (surname + 老师: how you address a teacher — far more common than \"Mr./Ms. Wang\")"],
+["convtitle","李医生","Lǐ yīshēng","Dr. Li (surname + 医生: doctor)"],
+["convtitle","张经理","Zhāng jīnglǐ","Manager Zhang (surname + 经理: manager)"],
+["convtitle","陈老板","Chén lǎobǎn","Boss Chen (surname + 老板: boss/owner, common even casually)"],
+["convtitle","刘教授","Liú jiàoshòu","Professor Liu (surname + 教授: professor)"],
+["convtitle","黄律师","Huáng lǜshī","Lawyer Huang (surname + 律师: lawyer)"],
+["convtitle","孙护士","Sūn hùshi","Nurse Sun (surname + 护士: nurse)"],
+["convtitle","赵先生","Zhào xiānsheng","Mr. Zhao (surname + 先生: the one case that does map to English \"Mr.\")"],
+["convtitle","周小姐","Zhōu xiǎojiě","Miss/Ms. Zhou (surname + 小姐: Miss/Ms., though 女士 is more common in formal writing)"],
 // ---- Grammar: The Three 的/得/地 ----
 ["gde","这是我的手机。","Zhè shì wǒ de shǒujī.","This is my phone. (的: possession — noun + 的 + noun)"],
 ["gde","红色的车","hóngsè de chē","the red car (的: description — adjective + 的 + noun)"],
@@ -5335,6 +5494,286 @@ function speak(text){
   }catch(e){}
 }
 
+/* ============================= QUICK DICTIONARY / TRANSLATE ============================= *
+   Two tiers, searched together:
+   1) Course vocabulary (VOCAB) — words actually taught in Mandarin Runway. These
+      results are shown first, labeled "In your course", and can carry a real
+      example sentence (v.ex) plus SRS/audio integration elsewhere in the app.
+   2) CC-CEDICT — a bundled, fully offline, ~124,000-entry Chinese-English
+      dictionary (see cedict-data.js / cedict-LICENSE.txt) loaded on demand the
+      first time the Dictionary tab is opened. These results are shown second,
+      labeled "Dictionary", and never carry a fabricated example sentence —
+      CC-CEDICT is a word/phrase dictionary, not a sentence corpus.
+   Both tiers use the same lenient matching approach: exact hanzi, hanzi
+   substring, exact pinyin (tone marks/numbers optional), exact English meaning,
+   whole-word English match, pinyin prefix, English substring, pinyin substring. */
+function normPinyin(s){
+  return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[0-9]/g,"").replace(/\s+/g,"");
+}
+function dictSearch(query){
+  query = (query||"").trim();
+  if(!query) return [];
+  var qLower = query.toLowerCase();
+  var qPinyin = normPinyin(query);
+  var hasHanzi = /[\u3400-\u9fff]/.test(query);
+  var wordRe = null;
+  try{ wordRe = new RegExp("\\b"+qLower.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b"); }catch(e){}
+  var scored = [];
+  VOCAB.forEach(function(v){
+    if(!v.h) return;
+    var eLower = (v.e||"").toLowerCase();
+    var pNorm = normPinyin(v.p);
+    var score = 0;
+    if(hasHanzi && v.h===query) score = 100;
+    else if(hasHanzi && v.h.indexOf(query)!==-1) score = 90;
+    else if(qPinyin && pNorm===qPinyin) score = 85;
+    else if(eLower===qLower) score = 80;
+    else if(wordRe && wordRe.test(eLower)) score = 65;
+    else if(qPinyin && pNorm.indexOf(qPinyin)===0) score = 50;
+    else if(eLower.indexOf(qLower)!==-1) score = 40;
+    else if(qPinyin && qPinyin.length>=2 && pNorm.indexOf(qPinyin)!==-1) score = 25;
+    if(score>0) scored.push({item:v, score:score});
+  });
+  scored.sort(function(a,b){ return b.score-a.score || a.item.h.length-b.item.h.length; });
+  var seen = {}, out = [];
+  scored.forEach(function(r){
+    var key = r.item.h+"|"+r.item.p+"|"+r.item.e;
+    if(seen[key]) return;
+    seen[key] = true;
+    out.push(r.item);
+  });
+  return out.slice(0, 30);
+}
+
+var dictQuery = "";
+var dictSelected = null;
+
+/* ---- CC-CEDICT: lazy-loaded (only when Dictionary tab is first opened, so it
+   never delays the app's initial load), then kept in memory with precomputed
+   lowercase-definition / toneless-pinyin arrays for fast repeated search. ---- */
+var cedictLoaded = false;
+var cedictLoading = false;
+var cedictLoadFailed = false;
+var cedictLoadCallbacks = [];
+var CEDICT_LOWER_DEF = null;
+var CEDICT_TONELESS_P = null;
+
+function ensureCedictLoaded(cb){
+  if(cedictLoaded){ if(cb) cb(); return; }
+  if(cb) cedictLoadCallbacks.push(cb);
+  if(cedictLoading) return;
+  cedictLoading = true;
+  var s = document.createElement("script");
+  s.src = "cedict-data.js";
+  s.onload = function(){
+    try{
+      var n = (typeof CEDICT_DATA!=="undefined") ? CEDICT_DATA.length : 0;
+      CEDICT_LOWER_DEF = new Array(n);
+      CEDICT_TONELESS_P = new Array(n);
+      for(var i=0;i<n;i++){
+        CEDICT_LOWER_DEF[i] = CEDICT_DATA[i][3].toLowerCase();
+        CEDICT_TONELESS_P[i] = normPinyin(CEDICT_DATA[i][2]);
+      }
+      cedictLoaded = true;
+    }catch(e){ cedictLoadFailed = true; }
+    cedictLoading = false;
+    var cbs = cedictLoadCallbacks; cedictLoadCallbacks = [];
+    cbs.forEach(function(fn){ fn(); });
+  };
+  s.onerror = function(){
+    cedictLoading = false; cedictLoadFailed = true;
+    var cbs = cedictLoadCallbacks; cedictLoadCallbacks = [];
+    cbs.forEach(function(fn){ fn(); });
+  };
+  document.head.appendChild(s);
+}
+
+function cedictSearch(query){
+  if(!cedictLoaded || typeof CEDICT_DATA==="undefined") return [];
+  query = (query||"").trim();
+  if(!query) return [];
+  var qLower = query.toLowerCase();
+  var qPinyin = normPinyin(query);
+  var hasHanzi = /[\u3400-\u9fff]/.test(query);
+  var wordRe = null;
+  try{ wordRe = new RegExp("\\b"+qLower.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b"); }catch(e){}
+  var scored = [];
+  var n = CEDICT_DATA.length;
+  for(var i=0;i<n;i++){
+    var e = CEDICT_DATA[i];
+    var h = e[0];
+    var defLower = CEDICT_LOWER_DEF[i];
+    var pNorm = CEDICT_TONELESS_P[i];
+    var score = 0;
+    if(hasHanzi && h===query) score = 100;
+    else if(hasHanzi && h.indexOf(query)!==-1) score = 90;
+    else if(qPinyin && pNorm===qPinyin) score = 85;
+    else if(defLower===qLower) score = 80;
+    else if(wordRe && wordRe.test(defLower)) score = 65;
+    else if(qPinyin && qPinyin.length>=2 && pNorm.indexOf(qPinyin)===0) score = 50;
+    else if(qLower.length>=2 && defLower.indexOf(qLower)!==-1) score = 40;
+    else if(qPinyin && qPinyin.length>=2 && pNorm.indexOf(qPinyin)!==-1) score = 25;
+    if(score>0) scored.push({item:e, score:score});
+  }
+  scored.sort(function(a,b){ return b.score-a.score || a.item[0].length-b.item[0].length; });
+  var seen = {}, out = [];
+  scored.forEach(function(r){
+    var e = r.item;
+    var key = e[0]+"|"+e[2];
+    if(seen[key]) return;
+    seen[key] = true;
+    out.push({ h:e[0], t:e[1], p:e[2], e:e[3], ex:null, _cedict:true });
+  });
+  return out.slice(0, 25);
+}
+
+var dictDebounceTimer = null;
+
+function dictResultRow(v){
+  var tagHtml = v._cedict ? ' <span class="pill" style="font-size:10px; padding:2px 8px; vertical-align:middle;">Dictionary</span>' : '';
+  var row = el(
+    '<button class="card cat-row dict-row" style="width:100%; text-align:left;">'+
+      '<span class="body" style="display:flex; flex-direction:column; gap:2px;">'+
+        '<span class="name hanzi" style="font-size:17px;">'+v.h+tagHtml+'</span>'+
+        '<span class="sub">'+v.p+' &middot; '+v.e+'</span>'+
+      '</span>'+
+      '<span class="chev">&rsaquo;</span>'+
+    '</button>'
+  );
+  row.addEventListener("click", function(){ dictSelected = v; renderDictResults(); });
+  return row;
+}
+
+function renderDictResults(){
+  var wrap = document.getElementById("dictResultsWrap");
+  if(!wrap) return;
+  wrap.innerHTML = "";
+
+  if(dictSelected){
+    var v = dictSelected;
+    var back = el('<button class="btn ghost" style="align-self:flex-start; margin-bottom:10px;">&larr; Back to results</button>');
+    back.addEventListener("click", function(){ dictSelected = null; renderDictResults(); });
+    wrap.appendChild(back);
+    var card = el(
+      '<div class="card" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:22px;">'+
+        (v._cedict ? '<span class="pill" style="margin-bottom:4px;">Dictionary (CC-CEDICT)</span>' : '')+
+        '<button class="hanzi" id="dictBig" style="all:unset; cursor:pointer; font-size:56px; font-weight:700; line-height:1.1;">'+v.h+'</button>'+
+        '<div style="font-size:18px; font-weight:700; color:var(--jade);">'+v.p+'</div>'+
+        '<div class="muted" style="font-size:15px; text-align:center;">'+v.e+'</div>'+
+        '<button class="btn ghost" id="dictSpeakBtn" style="margin-top:10px;">&#128266; Play pronunciation</button>'+
+      '</div>'
+    );
+    wrap.appendChild(card);
+    card.querySelector("#dictBig").addEventListener("click", function(){ speak(v.h); });
+    card.querySelector("#dictSpeakBtn").addEventListener("click", function(){ speak(v.h); });
+    if(v.ex){
+      var exCard = el(
+        '<div class="card" style="margin-top:12px; padding:16px; display:flex; flex-direction:column; gap:6px;">'+
+          '<div class="eyebrow">Used in a sentence</div>'+
+          '<div class="ex-h hanzi" style="font-size:17px;">'+v.ex.h+'</div>'+
+          '<div class="ex-p muted">'+v.ex.p+'</div>'+
+          '<div class="ex-e">'+v.ex.e+'</div>'+
+          '<button class="btn ghost" id="dictExSpeak" style="align-self:flex-start; margin-top:6px;">&#128266; Play sentence</button>'+
+        '</div>'
+      );
+      wrap.appendChild(exCard);
+      exCard.querySelector("#dictExSpeak").addEventListener("click", function(){ speak(v.ex.h); });
+    } else if(v._cedict){
+      wrap.appendChild(el('<div class="muted" style="margin-top:12px; font-size:13px;">CC-CEDICT is a word/phrase dictionary, not a sentence corpus &mdash; no example sentence for this entry.</div>'));
+    } else {
+      wrap.appendChild(el('<div class="muted" style="margin-top:12px; font-size:13px;">No example sentence is stored for this word yet.</div>'));
+    }
+    return;
+  }
+
+  if(!dictQuery.trim()){
+    wrap.appendChild(el('<div class="muted" style="padding:6px 2px; font-size:13.5px;">Start typing an English word, a pinyin spelling (with or without tones, e.g. "shui" or "shuǐ"), or paste a Chinese character.</div>'));
+    return;
+  }
+
+  var courseResults = dictSearch(dictQuery);
+  var dictResults = cedictLoaded ? cedictSearch(dictQuery) : [];
+  var courseKeys = {};
+  courseResults.forEach(function(v){ courseKeys[v.h+"|"+normPinyin(v.p)] = true; });
+  dictResults = dictResults.filter(function(v){ return !courseKeys[v.h+"|"+normPinyin(v.p)]; });
+
+  if(courseResults.length===0 && dictResults.length===0){
+    if(!cedictLoaded && !cedictLoadFailed){
+      wrap.appendChild(el(
+        '<div class="teacher-note"><span class="seal hanzi">\u5178</span><span>Loading the offline dictionary (about 124,000 words) for the first time this session&hellip; hang on a moment and this will refresh automatically.</span></div>'
+      ));
+    } else {
+      wrap.appendChild(el(
+        '<div class="teacher-note"><span class="seal hanzi">\u5178</span><span>No match found. This searches your course vocabulary plus a bundled, fully offline CC-CEDICT dictionary of about 124,000 Chinese words and phrases &mdash; but it looks up individual words and short phrases, not full sentences, so pasting in a whole sentence to translate won\'t work well. Try a simpler English word, a different pinyin spelling, or check the spelling of the character.</span></div>'
+      ));
+    }
+    return;
+  }
+
+  if(courseResults.length){
+    wrap.appendChild(el('<div class="eyebrow" style="margin:2px 0 -2px 2px;">In your course</div>'));
+    var list1 = el('<div class="cat-list" style="display:flex; flex-direction:column; gap:8px;"></div>');
+    courseResults.forEach(function(v){ list1.appendChild(dictResultRow(v)); });
+    wrap.appendChild(list1);
+  }
+
+  if(dictResults.length){
+    wrap.appendChild(el('<div class="eyebrow" style="margin:'+(courseResults.length ? '14px' : '2px')+' 0 -2px 2px;">Dictionary (CC-CEDICT)</div>'));
+    var list2 = el('<div class="cat-list" style="display:flex; flex-direction:column; gap:8px;"></div>');
+    dictResults.forEach(function(v){ list2.appendChild(dictResultRow(v)); });
+    wrap.appendChild(list2);
+  } else if(!cedictLoaded && !cedictLoadFailed && courseResults.length){
+    wrap.appendChild(el('<div class="muted" style="font-size:12.5px; padding:8px 2px 2px;">Loading the offline dictionary for broader results&hellip;</div>'));
+  }
+}
+
+function renderDict(){
+  var sec = el('<section style="display:flex; flex-direction:column; gap:14px;"></section>');
+  sec.appendChild(el('<div class="section-head"><h2>Dictionary</h2><span class="pill">'+VOCAB.length+' course &middot; ~124k CC-CEDICT</span></div>'));
+  sec.appendChild(el('<div class="muted" style="font-size:13.5px; margin-top:-8px;">Quick lookup for travel &mdash; type an English word, pinyin, or paste a character. Searches your course vocabulary plus a bundled, fully offline CC-CEDICT dictionary (word/phrase level &mdash; not full-sentence translation).</div>'));
+
+  var searchBar = el(
+    '<div class="card" style="padding:10px 14px; display:flex; align-items:center; gap:10px;">'+
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px; flex-shrink:0; color:var(--mist);"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>'+
+      '<input id="dictInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Search: water, shui3, shuǐ, or 水" '+
+        'style="flex:1; border:none; outline:none; background:transparent; color:var(--ink); font-size:16px; font-family:inherit;">'+
+      '<button id="dictClear" class="btn ghost" style="padding:6px 12px; font-size:12px;" hidden>Clear</button>'+
+    '</div>'
+  );
+  sec.appendChild(searchBar);
+
+  var resultsWrap = el('<div id="dictResultsWrap" style="display:flex; flex-direction:column;"></div>');
+  sec.appendChild(resultsWrap);
+  main.appendChild(sec);
+
+  var input = searchBar.querySelector("#dictInput");
+  var clearBtn = searchBar.querySelector("#dictClear");
+  input.value = dictQuery;
+  clearBtn.hidden = !dictQuery;
+  input.addEventListener("input", function(){
+    dictQuery = input.value;
+    dictSelected = null;
+    clearBtn.hidden = !dictQuery;
+    // Debounce: the CC-CEDICT tier scans ~124k entries per keystroke (~15-25ms
+    // measured), so results are recomputed a beat after typing pauses rather
+    // than on every keystroke, keeping the input itself feeling instant.
+    clearTimeout(dictDebounceTimer);
+    dictDebounceTimer = setTimeout(function(){ renderDictResults(); }, 90);
+  });
+  clearBtn.addEventListener("click", function(){
+    dictQuery = "";
+    input.value = "";
+    dictSelected = null;
+    clearBtn.hidden = true;
+    clearTimeout(dictDebounceTimer);
+    renderDictResults();
+    input.focus();
+  });
+  ensureCedictLoaded(function(){ renderDictResults(); });
+  renderDictResults();
+  if(!("ontouchstart" in window)) input.focus();
+}
+
 /* ============================= NAV / RENDER ============================= */
 
 var main = document.getElementById("main");
@@ -5378,6 +5817,7 @@ function render(){
   else if(currentTab==="practice") renderPractice();
   else if(currentTab==="reading") renderReading();
   else if(currentTab==="progress") renderProgress();
+  else if(currentTab==="dict") renderDict();
   document.querySelectorAll(".hanzi, .h, .ex-h").forEach(function(elm){
     if(!elm.hasAttribute("lang")) elm.setAttribute("lang","zh-CN");
   });
@@ -5532,6 +5972,17 @@ function renderLearn(){
           saveState();
         });
         sub.appendChild(header);
+        var wsMatch = /^HSK([123])\b/.exec(g);
+        if(learnView.trk==="chars" && wsMatch){
+          var wsLevel = wsMatch[1];
+          var wsLink = el(
+            '<a class="btn ghost" href="worksheet-hsk'+wsLevel+'.pdf" download="mandarin-runway-hsk'+wsLevel+'-worksheet.pdf" '+
+              'style="align-self:flex-start; margin:8px 0 10px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12.5px; padding:8px 14px;">'+
+              '&#128196; Download HSK'+wsLevel+' practice worksheet (PDF)'+
+            '</a>'
+          );
+          sub.appendChild(wsLink);
+        }
         sub.appendChild(list2);
         sec2.appendChild(sub);
       });
@@ -5548,6 +5999,22 @@ function renderLearn(){
   sec3.appendChild(el('<div class="section-head"><h2>'+CATS[learnView.cat].name+'</h2><span class="pill">'+catItems(learnView.cat).length+' items</span></div>'));
   if(CATS[learnView.cat].note){
     sec3.appendChild(el('<div class="teacher-note"><span class="seal hanzi">师</span><span>'+CATS[learnView.cat].note+'</span></div>'));
+  }
+  if(learnView.cat==="charmethod"){
+    var wsPanel = el('<div class="card" style="padding:14px 16px; display:flex; flex-direction:column; gap:8px; margin-top:2px;"></div>');
+    wsPanel.appendChild(el('<div class="eyebrow">Printable practice worksheets</div>'));
+    wsPanel.appendChild(el('<div class="muted" style="font-size:12.5px;">One PDF per HSK level — a tian-zi-ge (田字格) grid for every character, ready to print and fill in by hand. No answers are printed on them; check your writing and stroke order back in the app.</div>'));
+    var wsRow = el('<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:2px;"></div>');
+    [1,2,3].forEach(function(lvl){
+      wsRow.appendChild(el(
+        '<a class="btn ghost" href="worksheet-hsk'+lvl+'.pdf" download="mandarin-runway-hsk'+lvl+'-worksheet.pdf" '+
+          'style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12.5px; padding:8px 14px;">'+
+          '&#128196; HSK'+lvl+' worksheet (PDF)'+
+        '</a>'
+      ));
+    });
+    wsPanel.appendChild(wsRow);
+    sec3.appendChild(wsPanel);
   }
   // Rich lesson content for the initials/finals pronunciation categories:
   // grouped symbol + plain-English articulation guide + example words.
@@ -5852,11 +6319,14 @@ var JOURNEY_CAT_ORDER = {
   // example sentences use both constantly — better to explain them before
   // the vocabulary tracks lean on them than to leave them unexplained noise
   // for three whole tracks.
-  found: ["tone","initials","finals","syllables","numbers","gbasic","gword","liang","asp","ques"],
+  found: ["tone","initials","finals","syllables","numbers",
+    "convpro","convbe","convgreet","convself","convother",
+    "convstruct","convyn","convqw","convne","convposs","convclose","convtitle",
+    "gbasic","gword","liang","asp","ques"],
   // CHAR_CATS is already built in HSK1 -> HSK2 -> HSK3 order (chars_wire.js
   // groups by hsk level, ascending), so this just makes that ordering an
   // explicit, robust guarantee rather than relying on object key order.
-  chars: CHAR_CATS,
+  chars: ["charmethod"].concat(CHAR_CATS),
   inter: ["gram","compare","gde","gguozhe","gconn","idiom","office","culture","news"],
   adv: ["comp","gadvconn","gemphasis","adv_idiom","adv_write","adv_biz","adv_topics"]
 };
