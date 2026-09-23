@@ -19,7 +19,7 @@
 // is what makes them instantly available offline without a network
 // round-trip on every load.
 
-var CACHE_NAME = "mandarin-runway-v6";
+var CACHE_NAME = "mandarin-runway-v7";
 var NETWORK_FIRST = ["./", "./index.html"];
 var CORE_ASSETS = [
   "./",

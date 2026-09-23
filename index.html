@@ -123,6 +123,25 @@
   .btn:disabled{opacity:.45;}
   .btn-row{display:flex; gap:10px; flex-wrap:wrap;}
 
+  /* ---------- Pattern/stage rows (pronunciation groups, Grammar Structures) ----------
+     The "sym" label (e.g. "S+V+O", or a longer pattern like "S+Time+Place+Manner+V+O")
+     used to sit in a plain flex row with a hard-coded min-width that let it shrink
+     below its own text width — on a narrow phone screen a long, unbreakable symbol
+     like "S+Time+Place+Manner+V+O" would then overflow its shrunk box and visually
+     overlap the description text right next to it. Wrapping the pair and letting the
+     symbol wrap/break instead of overflowing fixes that at any width. */
+  .pron-sym-row{display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap;}
+  .pron-sym-row .sym{white-space:normal; overflow-wrap:anywhere; flex-shrink:1; min-width:0; max-width:100%;}
+  .pron-sym-row .muted{flex:1 1 160px; min-width:0;}
+  @media (max-width:420px){
+    .pron-sym-row{flex-direction:column; gap:4px;}
+  }
+  .pron-ex-block{display:flex; flex-direction:column; gap:4px; padding:8px 10px; border-radius:10px; background:var(--jade-soft, rgba(0,0,0,.03)); min-width:160px;}
+  .pron-ex-block .ex-h{font-size:14px;}
+  .pron-ex-block .ex-p{font-size:12px; color:var(--mist);}
+  .pron-ex-block .ex-e{font-size:12px; color:var(--mist); font-style:italic;}
+  .pron-ex-block .speak-btn{align-self:flex-start; margin-top:2px;}
+
   /* ---------- Home / hero ---------- */
   .hero{
     background:linear-gradient(155deg, var(--brand) 0%, var(--brand-grad-end) 100%);
@@ -688,34 +707,131 @@ var CATS = {
     ]},
   gs_topic:{trk:"gramstruct", group:"Word Order", name:"Topic-Comment Structure", desc:"这本书我看过了 — leading with what's being talked about, even when it isn't the grammatical subject",
     note:"Subject-first word order (\"Subject + Time + Place + Verb + Object\", the previous lesson) is the default — but Chinese has a second, equally fundamental way to build a sentence: TOPIC + COMMENT. The topic is whatever the sentence is ABOUT; the comment is everything said about it. Very often the topic isn't the grammatical subject or agent of the verb at all — 这本书我看过了 (\"this book, I've read it\") puts 这本书 (\"this book\", the OBJECT of 看) at the very front, ahead of 我 (the actual subject/agent who does the reading). English can do this too (\"this book, I've read\"), but it's a marked, occasional choice; in Chinese it's an everyday, unmarked, extremely common structure — linguists specifically classify Chinese as a \"topic-prominent\" language for exactly this reason.\n\nA topic-comment sentence and its more English-like subject-first equivalent are both grammatical and often both natural — the difference is emphasis, not correctness: 这本书我看过了 puts THE BOOK at the front of attention (useful when the book is already the shared subject of conversation); 我看过这本书了 states the same fact with the person doing the reading leading instead. Reach for topic-fronting whenever what you're about to say IS about something already established or just mentioned — it's how Chinese naturally keeps a conversation's thread going without repeating the same noun as the subject of every sentence.",
-    },
+    groups:[
+      {label:"Stage 1 — Subject-first (the default order)", items:[
+        {sym:"S+V+O", desc:"The ordinary, subject-first way to state this fact — grammatically correct and perfectly natural on its own.", ex:[{h:"我看过这本书了。",p:"Wǒ kànguo zhè běn shū le.",e:"I've read this book."}]}
+      ]},
+      {label:"Stage 2 — Topic-Comment (same fact, object fronted)", items:[
+        {sym:"Topic + S+V", desc:"The exact same fact, but 这本书 (the object of 看) is pulled to the very front as the topic, with 我看过了 as the comment about it — natural when the book is already what the conversation is about.", ex:[{h:"这本书我看过了。",p:"Zhè běn shū wǒ kànguo le.",e:"This book, I've read it. (As for this book, I've already read it.)"}]}
+      ]},
+      {label:"Stage 3 — another everyday topic-fronted example", items:[
+        {sym:"Topic + S+V", desc:"这个问题 (\"this question\") is fronted as the topic even though it's the object of 知道, not its subject — an everyday pattern, not a special or marked one.", ex:[{h:"这个问题我不知道。",p:"Zhège wèntí wǒ bù zhīdào.",e:"This question, I don't know. (As for this question, I don't know [the answer]。)"}]}
+      ]}
+    ]},
   gs_compare:{trk:"gramstruct", group:"Comparisons & Emphasis", name:"Comparison: Negative & Equal Forms", desc:"A没有B(那么)+adj and A不比B+adj — the negative counterparts to 比， covered alongside the full comparison lesson in Intermediate Core",
     note:"\"Comparison\" (in Intermediate Core) already covers 比 for a direct comparison (他比我高, \"he's taller than me\") plus 跟...一样 (equal), 越...越 (the more...the more), and 不如 (not as good as) — go there first for the full picture; this lesson focuses specifically on the two NEGATIVE comparison forms that trip learners up because English collapses them into one idea (\"not as tall\"):\n\n• A + 没有 + B + (那么) + adjective states that A falls SHORT of B — 我没有他那么高 (\"I'm not as tall as him\", literally \"I don't-have him that-much tall\"). This is by far the more common, more neutral way to say \"not as ___ as\" in everyday speech.\n• A + 不比 + B + adjective denies that A EXCEEDS B, which is subtly different — 这个不比那个好 (\"this one isn't better than that one\") often carries a softer implication of \"about the same\" or \"maybe even equal,\" rather than plainly stating A is less. When in doubt, 没有...那么 is the safer, more common default for a plain \"not as ___ as.\"\n\nOne rule worth memorizing outright: 比-family comparisons (比, 不比) never take 很 in front of the adjective — 他比我很高 is simply wrong; use 比我高 alone, or add a specific amount/更 for extra emphasis (他比我更高, 他比我大三岁) instead of reaching for 很.",
-    },
+    groups:[
+      {label:"Stage 1 — A + 没有 + B + 那么 + adj (falls short of B)", items:[
+        {sym:"A + 没有 + B + 那么 + adj", desc:"The common, neutral way to say \"not as ___ as\" — states plainly that I fall short of him in height, nothing more.", ex:[{h:"我没有他那么高。",p:"Wǒ méiyǒu tā nàme gāo.",e:"I'm not as tall as him."}]}
+      ]},
+      {label:"Stage 2 — A + 不比 + B + adj (denies A exceeds B)", items:[
+        {sym:"A + 不比 + B + adj", desc:"A softer claim than Stage 1 — it only denies that this one is BETTER than that one, which can imply \"about the same\" rather than plainly \"worse.\"", ex:[{h:"这个不比那个好。",p:"Zhège bù bǐ nàge hǎo.",e:"This one isn't better than that one."}]}
+      ]},
+      {label:"Stage 3 — 比 never takes 很 (a rule, not a variant)", items:[
+        {sym:"A + 比 + B + adj (no 很)", desc:"他比我很高 is a common learner mistake — 很 can never sit in front of the adjective in a 比-comparison. Only the bare adjective (比我高) is correct; add 更 or a specific amount instead if you want extra emphasis.", ex:[{h:"他比我高。",p:"Tā bǐ wǒ gāo.",e:"He's taller than me."}]}
+      ]}
+    ]},
   gs_deyou:{trk:"gramstruct", group:"Comparisons & Emphasis", name:"是...的: Emphasizing a Detail of a Past Action", desc:"我是昨天来的 — highlighting WHEN/HOW/WHERE/WHO of something already known to have happened, not restating that it happened",
     note:"Don't confuse this with plain 是 from \"The Verb 是 (to be)\" — that 是 links two NOUNS in the present, general sense (我是学生, \"I am a student\") and has nothing to do with time or emphasis. 是...的 is a completely different job: it's used for a PAST, already-established action — both speakers already know it happened — to zoom in and emphasize one specific DETAIL of how it happened: when, how, where, or who. The action itself (that I came, that you bought it) is old news; 是...的 puts the spotlight on one circumstance of it.\n\nCompare 我昨天来了 (\"I came yesterday\", a plain statement of fact — 了 marks it as completed) against 我是昨天来的 (\"it was YESTERDAY that I came\" — the fact that I came is assumed/already known; 是...的 stresses specifically WHEN). The same skeleton swaps in whatever detail is being emphasized: 是 + [detail] + verb...+ 的. \"Emphasis & Inversion\" (Advanced) briefly introduces this same construction alongside 连...都; this lesson is the fuller, dedicated walkthrough — go there afterward for a couple more emphasis patterns that build on the same instinct.\n\nNegate with 不是...的 (我不是坐飞机来的，是坐火车来的 — \"it wasn't by plane that I came, it was by train\"), and remember 是...的 only works for actions that already happened and are already assumed — never for the future or for something hypothetical, which is the most common mistake learners make with it.",
-    },
+    groups:[
+      {label:"Stage 1 — plain 了: just stating the fact happened", items:[
+        {sym:"S + V + 了", desc:"A plain statement that the action is complete — no detail is being singled out, just the bare fact that I came, and when.", ex:[{h:"我昨天来了。",p:"Wǒ zuótiān lái le.",e:"I came yesterday."}]}
+      ]},
+      {label:"Stage 2 — 是...的: the same fact, now emphasizing WHEN", items:[
+        {sym:"S + 是 + [detail] + V + 的", desc:"That I came is already assumed/known; 是...的 shifts the spotlight specifically onto WHEN it happened — \"it was YESTERDAY that I came,\" not a new announcement that I came at all.", ex:[{h:"我是昨天来的。",p:"Wǒ shì zuótiān lái de.",e:"It was yesterday that I came."}]}
+      ]},
+      {label:"Stage 3 — negated: 不是...的", items:[
+        {sym:"S + 不是 + [detail] + V + 的", desc:"Negating 是...的 denies the specific DETAIL (by plane), not the fact that I came at all — then supplies the correct detail (by train) the same way.", ex:[{h:"我不是坐飞机来的，是坐火车来的。",p:"Wǒ bú shì zuò fēijī lái de, shì zuò huǒchē lái de.",e:"It wasn't by plane that I came, it was by train."}]}
+      ]}
+    ]},
   gs_rescomp:{trk:"gramstruct", group:"Complements", name:"Result Complements", desc:"听懂/吃完/看见 — gluing a second verb or adjective right after the first to state the RESULT",
     note:"Chinese commonly glues a second verb or adjective directly after the main verb to show the RESULT of the action — a structural pattern with no single-word English equivalent. 听懂 (tīng + dǒng, \"listen\" + \"understand\") doesn't mean \"listen,\" it means \"listen AND successfully understand\" — the result is baked into the verb pair itself, not stated separately the way English needs a whole extra clause (\"understand by listening\"). Common result complements you'll see constantly: 完 (finish/complete: 吃完 \"finish eating\"), 懂 (understand: 听懂/看懂), 见 (perceive: 看见 \"catch sight of,\" different from plain 看 \"to look\"), 到 (successfully reach/achieve: 找到 \"find,\" literally \"look-for + arrive-at\"), 错 (wrong: 写错 \"write incorrectly\"), and 好 (satisfactorily: 准备好 \"get fully ready\"). Any of these can pair with a wide range of ordinary verbs, and the whole compound then behaves as a single unit, usually followed by 了 to mark it as completed: 我找到工作了 (\"I found a job\"). This is the base pattern the next lesson, Potential Complements, builds directly on top of.",
-    },
+    groups:[
+      {label:"Stage 1 — 懂 (understand): 听 + 懂", items:[
+        {sym:"V+懂", desc:"听懂 glues \"listen\" and \"understand\" into one unit — the result (successfully understanding) is baked right into the verb pair, not stated as a separate clause the way English needs.", ex:[{h:"我听懂了。",p:"Wǒ tīngdǒng le.",e:"I understood (by listening)."}]}
+      ]},
+      {label:"Stage 2 — 到 (successfully reach/achieve): 找 + 到", items:[
+        {sym:"V+到", desc:"找到 is literally \"look-for + arrive-at\" — the 到 marks that the search actually succeeded, not just that I looked.", ex:[{h:"我找到工作了。",p:"Wǒ zhǎodào gōngzuò le.",e:"I found a job."}]}
+      ]},
+      {label:"Stage 3 — 错 (wrong): 写 + 错", items:[
+        {sym:"V+错", desc:"写错 states the result of the writing was WRONG — 错 attaches directly to the verb instead of needing a separate \"incorrectly\" adverb.", ex:[{h:"我写错了。",p:"Wǒ xiěcuò le.",e:"I wrote it wrong."}]}
+      ]}
+    ]},
   gs_potcomp:{trk:"gramstruct", group:"Complements", name:"Potential Complements: 得/不 + Result", desc:"听得懂/听不懂 — inserting 得 or 不 into a result-complement pair to say CAN or CAN'T",
     note:"Take any verb+result pair from the last lesson (听懂, 看懂, 吃完, 搬动...) and insert 得 (de) between the two halves to mean CAN achieve that result, or 不 to mean CAN'T: 听懂 (\"listen and understand\") becomes 听得懂 (\"can understand by listening\" — capable of it) or 听不懂 (\"can't understand by listening\" — not capable). The result-complement pair itself never changes; only the tiny syllable in the middle flips between 得 and 不 to flip ability into inability.\n\nA few more: 这个箱子太重，我搬不动 (\"this box is too heavy, I can't move it\" — 搬动 \"move\" + 不 = physically unable); 这么多菜，你吃得完吗? (\"can you finish all this food?\" — 吃完 + 得, asked as a question); 太远了，我们去不了 (\"it's too far, we can't make it\" — a fixed potential-complement idiom using 了/liǎo). Note carefully: this is a completely different 得 from the possessive/descriptive 的 in \"Possessive Particle 的\" and a completely different JOB from the degree-complement 得 in the next lesson, even though all three sound identical (\"de\") — this one exists purely to insert can/can't into the middle of an existing result-complement compound, nowhere else.",
-    },
+    groups:[
+      {label:"Stage 1 — 得 vs 不: the same pair, flipped between can and can't", items:[
+        {sym:"V+得/不+Result", desc:"The exact same result-complement pair, 听懂, with only the middle syllable changed — 得 flips it to \"capable of\", 不 flips it to \"not capable of\". Nothing else about the sentence changes.", ex:[{h:"我听得懂。",p:"Wǒ tīng de dǒng.",e:"I can understand (by listening)."},{h:"我听不懂。",p:"Wǒ tīng bu dǒng.",e:"I can't understand (by listening)."}]}
+      ]},
+      {label:"Stage 2 — physical inability: 搬不动", items:[
+        {sym:"V+不+Result", desc:"搬动 (\"move\") + 不 says the box's weight makes moving it physically impossible for me — a real-world use of potential 不, not just a drill pattern.", ex:[{h:"这个箱子太重，我搬不动。",p:"Zhège xiāngzi tài zhòng, wǒ bān bu dòng.",e:"This box is too heavy, I can't move it."}]}
+      ]},
+      {label:"Stage 3 — asked as a question: 吃得完吗?", items:[
+        {sym:"V+得+Result+吗", desc:"吃完 (\"finish eating\") + 得, turned into a yes/no question with 吗 — asking whether finishing is realistically possible, given how much food there is.", ex:[{h:"这么多菜，你吃得完吗？",p:"Zhème duō cài, nǐ chī de wán ma?",e:"Can you finish all this food?"}]}
+      ]}
+    ]},
   gs_degcomp:{trk:"gramstruct", group:"Complements", name:"Degree Complements: Verb + 得 + Description", desc:"他跑得很快 — a third, different job for 得: describing HOW an action goes, not whether it's possible",
     note:"This is the third distinct grammatical job hiding behind the single syllable \"de\" — and the one most often confused with the potential-complement 得 from the previous lesson, so read this carefully. Here, 得 comes AFTER a complete, ordinary verb (not inserted inside a fixed result-complement pair) and introduces a description of the QUALITY or DEGREE of how the action goes: 他跑得很快 (\"he runs very fast\" — 跑 \"run\" + 得 + 很快 \"very fast\", describing how his running goes) or 她说得很清楚 (\"she speaks very clearly\"). Negate it by negating the DESCRIPTION after 得, not by swapping 得 for 不 the way potential complements do: 我昨晚睡得不好 (\"I didn't sleep well last night\" — 得不好, not 不睡得好).\n\nThe telltale difference from potential 得/不: potential complements only ever attach to an existing VERB+RESULT pair (听懂, 看完, 搬动— words that are already a fixed two-part unit, where 得/不 slots between the two halves) and answer \"can/can't\"; degree complements attach 得 after any ORDINARY, already-complete verb (跑, 说, 睡, 打扮) and answer \"how well/how much,\" describing something that already or habitually happens rather than asking about capability. 得 can even introduce a whole resulting clause this way: 他忙得没有时间吃饭 (\"he's so busy he doesn't have time to eat\"). (的, 得, and 地 are the three same-sounding, different-job particles as a set — see \"The Three 的/得/地\" for the full comparison including plain possessive 的 and adverbial 地.)",
-    },
+    groups:[
+      {label:"Stage 1 — describing HOW an action goes", items:[
+        {sym:"V+得+很+adj", desc:"跑 is a complete, ordinary verb on its own; 得很快 is added after it purely to describe the QUALITY of the running — nothing here is about ability, unlike potential complements.", ex:[{h:"他跑得很快。",p:"Tā pǎo de hěn kuài.",e:"He runs very fast."}]}
+      ]},
+      {label:"Stage 2 — a second ordinary verb, same pattern", items:[
+        {sym:"V+得+很+adj", desc:"说 (\"speak\") is likewise already complete before 得 attaches — 得很清楚 describes how clearly she speaks, habitually or in general.", ex:[{h:"她说得很清楚。",p:"Tā shuō de hěn qīngchu.",e:"She speaks very clearly."}]}
+      ]},
+      {label:"Stage 3 — negated: negate the description, not 得 itself", items:[
+        {sym:"V+得+不+adj", desc:"Unlike potential complements, you never swap 得 for 不 here — 得 stays, and 不好 (the description) is what gets negated: \"slept, and it was not good,\" not \"couldn't sleep.\"", ex:[{h:"我昨晚睡得不好。",p:"Wǒ zuówǎn shuì de bù hǎo.",e:"I didn't sleep well last night."}]}
+      ]}
+    ]},
   gs_ba:{trk:"gramstruct", group:"Special Constructions", name:"The 把 (bǎ) Construction", desc:"把 + object + verb + result — moving a specific object in front of the verb to focus on what happens TO it",
     note:"把 rearranges a sentence to put the OBJECT before the verb — Subject + 把 + Object + Verb + (a result, direction, or 了 after the verb) — shifting the focus from \"what did the subject do\" onto \"what happened to this specific thing.\" 我把书放在桌子上 (\"I put the book on the table\") is, word for word, \"I 把 book put at table-on\" — 书 has moved out of its normal after-the-verb slot and sits right after 把 instead.\n\n把 shows up when three things are all true: (1) the object is DEFINITE/specific — both speakers know exactly which book, door, or wallet is meant, never a vague \"a book\"; (2) the sentence is fundamentally about what happens TO that object — it gets moved, disposed of, changed, finished, or handed off; and (3) the verb needs something after it — a result complement (放在, 关上, 做完), a direction, or 了 — a bare verb right after a 把-object with nothing following it is broken grammar (我把书买 alone doesn't work; it needs 我把书买了 or similar).\n\nSkip 把 when the object is general/indefinite or there's no real change-of-state to emphasize — 我喝了一杯茶 (\"I drank a cup of tea\") is the natural phrasing; forcing 我把一杯茶喝了 sounds unnatural because there's nothing being \"done to\" a specific, already-known cup of tea. \"Grammar Patterns\" (Intermediate Core) has one quick 把 example already (请把文件发给我); this lesson is the dedicated version explaining when to reach for it and when not to.",
-    },
+    groups:[
+      {label:"Stage 1 — a specific object, moved before the verb", items:[
+        {sym:"S + 把 + O + V + Result", desc:"书 is a specific, already-known book, and the sentence is fundamentally about where it ends up — exactly the case 把 is built for. 书 moves out of its normal after-verb slot and sits right after 把.", ex:[{h:"我把书放在桌子上。",p:"Wǒ bǎ shū fàng zài zhuōzi shang.",e:"I put the book on the table."}]}
+      ]},
+      {label:"Stage 2 — contrast: when 把 is skipped entirely", items:[
+        {sym:"S + V + 了 + O (no 把)", desc:"一杯茶 (\"a cup of tea\") is a generic, indefinite object, and nothing is being changed or disposed of in a notable way — so the plain, no-把 sentence is the natural one. Forcing 把一杯茶喝了 here would sound stilted, because there's no specific, known object being acted upon.", ex:[{h:"我喝了一杯茶。",p:"Wǒ hēle yì bēi chá.",e:"I drank a cup of tea."}]}
+      ]}
+    ]},
   gs_bei:{trk:"gramstruct", group:"Special Constructions", name:"The 被 (bèi) Passive", desc:"杯子被打破了 — passive voice, used far more sparingly in Chinese than English",
     note:"被 marks the passive: Subject + 被 + (optional agent) + Verb + (usually a result or 了) — the subject RECEIVES the action instead of performing it. 杯子被打破了 (\"the cup was broken\") puts 杯子 (the thing broken) as the subject, with 被 marking that something (unspecified, or optionally named — 被他打破了, \"broken by him\") did it to it.\n\nHere's the honest, important caveat: Chinese uses 被 far less often than English uses its passive voice, and it's worth not overusing it. Traditionally 被 carries a mildly negative or unfortunate connotation — 被打破/被偷/被骗 (broken/stolen/deceived) are the classic textbook uses — though modern usage has loosened that somewhat. Many English sentences that LOOK passive (\"the report was finished,\" \"my wallet was lost\") translate more naturally into Chinese as a plain ACTIVE sentence or a topic-comment sentence (see that lesson) instead of reaching for 被: \"the report was finished yesterday\" is more natural as 报告昨天做完了 (topic-comment, no passive marker at all) than the grammatical-but-stilted 报告被做完了. Reach for 被 specifically when you want to highlight that the subject was acted upon — especially by an identifiable agent, or in a genuinely unfortunate way — not just because the English sentence you're translating happens to be passive.",
-    },
+    groups:[
+      {label:"Stage 1 — 被, no agent named", items:[
+        {sym:"S + 被 + V + 了", desc:"杯子 (the thing broken) is the subject, and 被 marks that something — unnamed — did the breaking. The classic textbook case: an unfortunate thing happened to the subject.", ex:[{h:"杯子被打破了。",p:"Bēizi bèi dǎpò le.",e:"The cup was broken."}]}
+      ]},
+      {label:"Stage 2 — 被 with the agent named", items:[
+        {sym:"S + 被 + Agent + V + 了", desc:"Adding 他 right after 被 names WHO did it — useful specifically when the agent is identifiable and worth stating, which is when 被 earns its keep.", ex:[{h:"杯子被他打破了。",p:"Bēizi bèi tā dǎpò le.",e:"The cup was broken by him."}]}
+      ]},
+      {label:"Stage 3 — same idea, but NOT passive: topic-comment instead", items:[
+        {sym:"Topic + V + 完 + 了 (no 被)", desc:"An English \"the report was finished\" looks passive, but nothing unfortunate happened and there's no agent worth naming — so natural Chinese just fronts 报告 as the topic and states it plainly, active-voice, with no 被 at all. Reaching for 被打完了 here would be grammatical but stilted.", ex:[{h:"报告昨天做完了。",p:"Bàogào zuótiān zuò wán le.",e:"The report was finished yesterday."}]}
+      ]}
+    ]},
   gs_dblobj:{trk:"gramstruct", group:"Special Constructions", name:"Double-Object Verbs", desc:"我给你一本书 — Subject + Verb + Person + Thing, no preposition needed",
     note:"A small set of everyday verbs — 给 (give), 教 (teach), 问 (ask), 送 (give as a gift), 告诉 (tell), 还 (return something) — can take TWO objects in a row, right after the verb: the RECIPIENT first, then the THING, with no preposition needed at all. 我给你一本书 (\"I'll give you a book\") is, word for word, \"I give you one book\" — where English needs \"to\" (\"give a book TO you\") or reorders the objects, Chinese just stacks Subject + Verb + Person + Thing directly. Likewise 老师教我们中文 (\"the teacher teaches us Chinese\"), 我想问你一个问题 (\"I want to ask you a question\"), and 他送了我一件礼物 (\"he gave me a gift\").\n\nSome of these verbs also allow an explicit 给-marked variant for extra clarity, especially in writing or when the recipient phrase is long — 送给我一件礼物 or 付给员工工资 (\"pay wages to employees\") both add 给 (\"give/to\") right after the main verb before the recipient. Either form is correct; the bare double-object form is the more common, everyday default for short, simple sentences.",
-    },
+    groups:[
+      {label:"Stage 1 — 给 (give): Subject + Verb + Person + Thing", items:[
+        {sym:"S+V+Person+Thing", desc:"你 (recipient) comes right after 给, then 一本书 (thing) — no \"to\" needed anywhere, unlike English \"give a book TO you.\"", ex:[{h:"我给你一本书。",p:"Wǒ gěi nǐ yì běn shū.",e:"I'll give you a book."}]}
+      ]},
+      {label:"Stage 2 — 教 (teach): same double-object shape", items:[
+        {sym:"S+V+Person+Thing", desc:"我们 (who's being taught) sits directly after 教, then 中文 (what's taught) — the identical Subject+Verb+Person+Thing skeleton, just a different verb.", ex:[{h:"老师教我们中文。",p:"Lǎoshī jiāo wǒmen Zhōngwén.",e:"The teacher teaches us Chinese."}]}
+      ]},
+      {label:"Stage 3 — 送 (give as a gift): with 了 marking completion", items:[
+        {sym:"S+V+了+Person+Thing", desc:"了 attaches right to the verb, then the same Person-then-Thing order continues uninterrupted — 了 doesn't change where the two objects go.", ex:[{h:"他送了我一件礼物。",p:"Tā sòngle wǒ yí jiàn lǐwù.",e:"He gave me a gift."}]}
+      ]},
+      {label:"Stage 4 — the explicit 送给 variant", items:[
+        {sym:"S+V给+Person+Thing", desc:"Adding 给 right after 送 makes the \"to the recipient\" relationship explicit — an optional, slightly more formal-sounding alternative to the bare double-object form in Stage 3, saying the same thing.", ex:[{h:"他送给我一件礼物。",p:"Tā sònggěi wǒ yí jiàn lǐwù.",e:"He gave me a gift."}]}
+      ]}
+    ]},
   gs_serial:{trk:"gramstruct", group:"Special Constructions", name:"Serial Verb Constructions", desc:"我去商店买东西 — two verb phrases chained back to back, no connector needed",
     note:"Chinese frequently chains two verb phrases directly together with no connecting word at all, in the natural chronological or logical order the actions actually happen — a \"serial verb construction.\" 我去商店买东西 (\"I'm going to the store to buy things\") stacks 去商店 (\"go to the store\") and 买东西 (\"buy things\") back to back: the first verb phrase states the means or destination, the second states the purpose or the next action, and English's \"to\" (\"go to the store TO buy things\") simply isn't needed. Other everyday examples: 他坐飞机来北京 (\"he came to Beijing by plane\" — method, then destination) and 我用筷子吃饭 (\"I eat with chopsticks\" — instrument, then the action itself). This is distinct from linking two full clauses with a connector like 然后 (\"then\") or 因为...所以 (\"because...so\", see \"More Connectors\") — here there's no linking word of any kind; the verb phrases just run in sequence, one after another.",
-    },
+    groups:[
+      {label:"Stage 1 — destination, then purpose", items:[
+        {sym:"V1+Place + V2+Thing", desc:"去商店 (go to the store) and 买东西 (buy things) simply run back to back in the order the actions actually happen — no \"to\" or connector linking them, unlike English \"go to the store TO buy things.\"", ex:[{h:"我去商店买东西。",p:"Wǒ qù shāngdiàn mǎi dōngxi.",e:"I'm going to the store to buy things."}]}
+      ]},
+      {label:"Stage 2 — method, then destination", items:[
+        {sym:"V1+Method + V2+Place", desc:"坐飞机 (\"by plane\", literally \"sit airplane\") states the means first, then 来北京 states where he ends up — the same back-to-back chaining, just with method leading instead of destination.", ex:[{h:"他坐飞机来北京。",p:"Tā zuò fēijī lái Běijīng.",e:"He came to Beijing by plane."}]}
+      ]}
+    ]},
   charmethod:{trk:"chars", group:"Start Here", name:"How to Actually Learn Characters", desc:"Read this first — the study method that makes characters stick, before you dive into HSK1",
     note:"Before memorizing individual characters, it's worth ten minutes learning HOW to memorize them — the difference between an efficient method and rote repetition is enormous over hundreds of characters. The seven ideas below are well-established in language-learning research, and they're the exact reasons this app is built the way it is (radicals, memory-hook stories, spaced review, and a writing-practice screen all exist because of the principles explained here). Skim this once, then start HSK1 below — and come back to it any time a batch of characters isn't sticking.",
     groups:[
@@ -7402,9 +7518,22 @@ function renderLearn(){
     return;
   }
   // vocab list for a category
-  var back2Label = learnView.trk==="levels" ? LEVELS[learnView.level].name : TRACKS[learnView.trk].name;
+  // verb100/adj100 are one-tap direct links straight from the Learn hub
+  // (see LEARN_TOP_ENTRIES' directCat) — they're excluded from the
+  // "Everyday Vocabulary" browse list (VOCAB_TOP_EXCLUDE), so the only way
+  // to land here with trk==="vocab" is via that direct button. In that case
+  // the back button should return straight to the Learn hub, not to a
+  // "Everyday Vocabulary" list the user never actually browsed through.
+  // Reached via Levels -> Intermediate instead (trk==="levels"), the normal
+  // "back to this level" behavior still applies.
+  var isDirectVocabCat = learnView.trk==="vocab" && (learnView.cat==="verb100" || learnView.cat==="adj100");
+  var back2Label = isDirectVocabCat ? "Learn" : (learnView.trk==="levels" ? LEVELS[learnView.level].name : TRACKS[learnView.trk].name);
   var back2 = el('<button class="btn ghost" style="align-self:flex-start;">&larr; '+back2Label+'</button>');
-  back2.addEventListener("click", function(){ learnView.cat=null; render(); });
+  back2.addEventListener("click", function(){
+    if(isDirectVocabCat){ learnView.trk=null; learnView.cat=null; }
+    else { learnView.cat=null; }
+    render();
+  });
   main.appendChild(back2);
 
   var sec3 = el('<section></section>');
@@ -7457,16 +7586,26 @@ function renderLearn(){
       gwrap.appendChild(el('<div class="eyebrow" style="margin-bottom:6px;">'+g.label+'</div>'));
       var gcard = el('<div class="card" style="display:flex; flex-direction:column; gap:0;"></div>');
       g.items.forEach(function(it, ii){
-        var exHtml = (it.ex||[]).map(function(x){ return '<span class="pron-ex hanzi" data-h="'+x.h.replace(/"/g,'&quot;')+'">'+x.h+' <span class="py">'+x.p+'</span></span>'; }).join(' ');
+        // Each example gets its own block: hanzi, pinyin, an English
+        // explanation of what that sentence shows, and a real tappable
+        // audio button — not just a bare clickable span with no English
+        // translation, which is what this used to render.
+        var exHtml = (it.ex||[]).map(function(x){
+          return '<div class="pron-ex-block">'+
+            '<div class="ex-h hanzi">'+x.h+'</div>'+
+            '<div class="ex-p">'+x.p+'</div>'+
+            (x.e ? '<div class="ex-e">'+x.e+'</div>' : '')+
+            '<button class="speak-btn" aria-label="Play sentence" data-h="'+x.h.replace(/"/g,'&quot;')+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button>'+
+          '</div>';
+        }).join('');
         var row = el(
-          '<div class="pron-row" style="padding:12px 4px; '+(ii>0?'border-top:1px solid var(--line);':'')+' display:flex; flex-direction:column; gap:6px;">'+
-            '<div style="display:flex; align-items:baseline; gap:10px;"><span class="sym" style="font-weight:800; font-size:18px; color:var(--jade); min-width:34px;">'+it.sym+'</span>'+
+          '<div class="pron-row" style="padding:12px 4px; '+(ii>0?'border-top:1px solid var(--line);':'')+' display:flex; flex-direction:column; gap:8px;">'+
+            '<div class="pron-sym-row"><span class="sym" style="font-weight:800; font-size:18px; color:var(--jade);">'+it.sym+'</span>'+
             '<span class="muted" style="font-size:13px; line-height:1.5;">'+it.desc+'</span></div>'+
-            '<div class="pron-examples" style="display:flex; gap:14px; flex-wrap:wrap; padding-left:44px;">'+exHtml+'</div>'+
+            (exHtml ? '<div class="pron-examples" style="display:flex; gap:10px; flex-wrap:wrap;">'+exHtml+'</div>' : '')+
           '</div>'
         );
-        row.querySelectorAll(".pron-ex").forEach(function(btn){
-          btn.style.cursor = "pointer";
+        row.querySelectorAll(".pron-ex-block .speak-btn").forEach(function(btn){
           btn.addEventListener("click", function(){ speak(btn.getAttribute("data-h")); });
         });
         gcard.appendChild(row);
