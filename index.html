@@ -7213,25 +7213,41 @@ function renderHome(){
 }
 
 /* ---------- LEARN ---------- */
-// Learn-tab top-level entries. "levels" is a virtual grouping (not a real
-// trk) that opens the Basic/Intermediate/Advanced tier picker; "pron" is a
-// virtual grouping over the 4 pronunciation-mechanics CATS pulled out of
-// trk:"found" for browsing only. Characters and Grammar Structures map
-// straight to their existing trk, unchanged.
+// Learn-tab top-level entries (8, in pedagogical order):
+//   Foundations -> Characters -> Everyday Vocabulary -> 100 Common Verbs ->
+//   100 Common Adjectives -> All Grammar Structures -> Travel -> Levels.
+// "levels" is a virtual grouping (not a real trk) that opens the
+// Basic/Intermediate/Advanced tier picker. Pronunciation (tone/initials/
+// finals/syllables, still trk:"found" underneath — see PRON_CATS) no longer
+// gets its own top-level button; it's folded back into Foundations, so
+// Foundations shows every trk:"found" category, pronunciation included.
+// "100 Common Verbs"/"100 Common Adjectives" are direct one-tap deep links
+// straight into the verb100/adj100 CATS entries (cat set immediately, no
+// intermediate list screen) rather than real top-level tracks of their own;
+// see the click handler below and VOCAB_TOP_EXCLUDE, which keeps those two
+// categories from also being listed (duplicated) inside "Everyday
+// Vocabulary". Characters, Grammar Structures and Travel map straight to
+// their existing trk, unchanged; Travel is additionally still reachable via
+// Levels -> Intermediate exactly as before (this is just an added shortcut,
+// not a restructuring of Levels' own grouping).
 var LEARN_TOP_ENTRIES = [
-  {id:"levels", name:"Levels", ico:"级", desc:"Basic, Intermediate and Advanced — every everyday-vocabulary, travel, business and grammar-pattern category, re-sorted by real difficulty.", pillText:"All levels"},
-  {id:"pron", name:"Pronunciation", ico:"音", desc:"Pinyin, the four tones, the 23 initials, and the 24 finals — how Mandarin sounds work.", pillText:"Beginner"},
-  {id:"chars", name:"Characters", ico:"字", desc:TRACKS.chars.desc, pillText:"Beginner"},
-  {id:"gramstruct", name:"Grammar Structures", ico:"构", desc:TRACKS.gramstruct.desc, pillText:"Intermediate"}
+  {id:"found", name:TRACKS.found.name, ico:TRACKS.found.ico, desc:TRACKS.found.desc, pillText:TRACKS.found.lvl},
+  {id:"chars", name:TRACKS.chars.name, ico:TRACKS.chars.ico, desc:TRACKS.chars.desc, pillText:TRACKS.chars.lvl},
+  {id:"vocab", name:TRACKS.vocab.name, ico:TRACKS.vocab.ico, desc:TRACKS.vocab.desc, pillText:TRACKS.vocab.lvl},
+  {id:"verb100", name:"100 Most Common Verbs", ico:"动", desc:CATS.verb100.desc, pillText:"Intermediate", directCat:"verb100", directTrk:"vocab"},
+  {id:"adj100", name:"100 Most Common Adjectives", ico:"形", desc:CATS.adj100.desc, pillText:"Intermediate", directCat:"adj100", directTrk:"vocab"},
+  {id:"gramstruct", name:"All Grammar Structures", ico:TRACKS.gramstruct.ico, desc:TRACKS.gramstruct.desc, pillText:TRACKS.gramstruct.lvl},
+  {id:"travel", name:TRACKS.travel.name, ico:TRACKS.travel.ico, desc:TRACKS.travel.desc, pillText:TRACKS.travel.lvl},
+  {id:"levels", name:"Levels", ico:"级", desc:"Basic, Intermediate and Advanced — every everyday-vocabulary, travel, business and grammar-pattern category, re-sorted by real difficulty.", pillText:"All levels"}
 ];
+// verb100/adj100 have their own direct Learn-tab buttons (above), so they're
+// hidden from the "Everyday Vocabulary" browse list to avoid listing them
+// twice; the underlying CATS entries and their trk:"vocab" are untouched, so
+// Practice's scope picker, Journey and Dictionary search are unaffected.
+var VOCAB_TOP_EXCLUDE = ["verb100","adj100"];
 function learnEntryMastery(id){
   if(id==="levels") return Math.round((levelMastery(state,"basic")+levelMastery(state,"intermediate")+levelMastery(state,"advanced"))/3*100);
-  if(id==="pron"){
-    var items = VOCAB.filter(function(v){return PRON_CATS.indexOf(v.cat)!==-1;});
-    if(!items.length) return 0;
-    var m=0; items.forEach(function(v){ if(levelFor(state,v.id)>=2) m++; });
-    return Math.round(m/items.length*100);
-  }
+  if(id==="verb100" || id==="adj100") return Math.round(catMastery(state,id)*100);
   return Math.round(trackMastery(state,id)*100);
 }
 function renderLearn(){
@@ -7251,7 +7267,20 @@ function renderLearn(){
           '<span class="bar"><i style="width:'+pct+'%"></i></span>'+
         '</button>'
       );
-      card.addEventListener("click", function(){ learnView.trk=entry.id; learnView.level=null; render(); });
+      card.addEventListener("click", function(){
+        if(entry.directCat){
+          // One-tap deep link straight into a single category's detail
+          // view (e.g. verb100/adj100) — skip the intermediate list screen.
+          learnView.trk = entry.directTrk;
+          learnView.level = null;
+          learnView.cat = entry.directCat;
+        } else {
+          learnView.trk = entry.id;
+          learnView.level = null;
+          learnView.cat = null;
+        }
+        render();
+      });
       grid.appendChild(card);
     });
     sec.appendChild(grid);
@@ -7287,7 +7316,6 @@ function renderLearn(){
   }
   if(!learnView.cat){
     var isLevels = learnView.trk==="levels";
-    var isPron = learnView.trk==="pron";
     var backLabel = isLevels ? "&larr; Levels" : "&larr; Learn";
     var backRow = el('<button class="btn ghost" style="align-self:flex-start;">'+backLabel+'</button>');
     backRow.addEventListener("click", function(){
@@ -7296,11 +7324,13 @@ function renderLearn(){
     });
     main.appendChild(backRow);
 
-    var headTitle = isLevels ? LEVELS[learnView.level].name : (isPron ? "Pronunciation" : TRACKS[learnView.trk].name);
+    var headTitle = isLevels ? LEVELS[learnView.level].name : TRACKS[learnView.trk].name;
     var sec2 = el('<section></section>');
     sec2.appendChild(el('<div class="section-head"><h2>'+headTitle+'</h2></div>'));
     var trkCats = isLevels ? levelCats(learnView.level) :
-      (isPron ? PRON_CATS.slice() : Object.keys(CATS).filter(function(c){return CATS[c].trk===learnView.trk;}));
+      Object.keys(CATS).filter(function(c){
+        return CATS[c].trk===learnView.trk && (learnView.trk!=="vocab" || VOCAB_TOP_EXCLUDE.indexOf(c)===-1);
+      });
     var hasGroups = trkCats.some(function(c){ return !!CATS[c].group; });
 
     function makeCatRow(cat){
@@ -7372,7 +7402,7 @@ function renderLearn(){
     return;
   }
   // vocab list for a category
-  var back2Label = learnView.trk==="levels" ? LEVELS[learnView.level].name : (learnView.trk==="pron" ? "Pronunciation" : TRACKS[learnView.trk].name);
+  var back2Label = learnView.trk==="levels" ? LEVELS[learnView.level].name : TRACKS[learnView.trk].name;
   var back2 = el('<button class="btn ghost" style="align-self:flex-start;">&larr; '+back2Label+'</button>');
   back2.addEventListener("click", function(){ learnView.cat=null; render(); });
   main.appendChild(back2);
