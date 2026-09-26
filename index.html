@@ -10723,6 +10723,10 @@ function bump(id, correct){
     cur.ivl = 0;
     cur.ease = Math.max(1.3, cur.ease - 0.2);
     cur.due = Date.now() + 10*60000; // resurface in 10 minutes
+    cur.everWrong = true; // permanent flag: this item has been missed at
+    // least once, so it now enters the weak/medium/strong review system
+    // (see weakMediumPool/strongItems below). Never cleared, even once the
+    // item climbs back up to "strong" — it stays part of this tracking.
   }
   cur.lastResult = correct;
   state.progress[id] = cur;
@@ -10770,14 +10774,18 @@ function dueCount(pool){
   return n;
 }
 // Weak/medium review pool — words & grammar sentences that have been
-// attempted at least once, tiered by state.progress[id].reps, the existing
-// correct-answer streak counter bump() already maintains (reset to 0 on any
-// wrong answer, +1 on every correct answer since the last wrong one). Tiers:
-// weak = reps < 3, medium = 3 <= reps < 6 (three correct answers to advance
-// a tier, matching the "3 in a row" mental model). A wrong answer anywhere
-// in the app resets reps via bump(), so a medium/strong item that gets
-// missed drops straight back to weak the next time this pool is computed —
-// no extra bookkeeping needed, it falls out of reusing reps directly.
+// answered WRONG at least once (r.everWrong, permanently set by bump() the
+// first time an item is missed), tiered by state.progress[id].reps, the
+// existing correct-answer streak counter bump() already maintains (reset to
+// 0 on any wrong answer, +1 on every correct answer since the last wrong
+// one). Tiers: weak = reps < 3, medium = 3 <= reps < 6 (three correct
+// answers to advance a tier, matching the "3 in a row" mental model). A word
+// answered correctly on its very first-ever attempt never gets r.everWrong
+// set, so it never enters this pool at all — only items that have actually
+// been missed are tracked here. A wrong answer anywhere in the app resets
+// reps via bump(), so a medium/strong item that gets missed drops straight
+// back to weak the next time this pool is computed — no extra bookkeeping
+// needed, it falls out of reusing reps directly.
 // Deliberately scoped to VOCAB+GRAMMAR_SENTENCES only (not CORRECTIONS —
 // different display shape, kept out to keep this feature simple/reliable).
 // See the Review section in the Practice tab (renderWeakReview) for the UI.
@@ -10786,11 +10794,12 @@ function weakMediumPool(){
   var weak = [], medium = [];
   pool.forEach(function(item){
     var r = state.progress[item.id];
-    // A record's mere existence means "attempted at least once" — do NOT
-    // gate on r.reps being truthy here: reps===0 is exactly what makes an
-    // attempted item "weak", so requiring reps>0 would silently exclude
-    // every weak item and this list would only ever show "medium".
-    if(!r) return;
+    // Only items missed at least once enter review tracking — a record's
+    // mere existence is NOT enough (a first-try-correct answer also creates
+    // a record). r.reps itself is still allowed to be 0 here (that's exactly
+    // what makes a just-missed item "weak"); it's r.everWrong that gates
+    // entry into the pool at all.
+    if(!r || !r.everWrong) return;
     var reps = r.reps || 0;
     if(reps < 3) weak.push(item);
     else if(reps < 6) medium.push(item);
@@ -10801,14 +10810,16 @@ function weakMediumCount(){
   var p = weakMediumPool();
   return p.weak.length + p.medium.length;
 }
-// Items with a progress record and reps>=6 (two full 3-correct-answer
-// promotions from weak) — the "Strong" tier on the Review page. Mirrors
-// weakMediumPool's tiering so all three tiers share one consistent,
-// reps-streak-based classification.
+// Items that have been missed at least once (r.everWrong) and have since
+// climbed to reps>=6 (two full 3-correct-answer promotions from weak) — the
+// "Strong" tier on the Review page. Mirrors weakMediumPool's tiering so all
+// three tiers share one consistent, everWrong+reps-streak-based
+// classification; an item that was never gotten wrong never appears here
+// either, no matter how many times it's been answered correctly.
 function strongItems(){
   return VOCAB.concat(GRAMMAR_SENTENCES).filter(function(v){
     var r = state.progress[v.id];
-    return r && (r.reps||0) >= 6;
+    return r && r.everWrong && (r.reps||0) >= 6;
   });
 }
 function strongCount(){
@@ -11202,14 +11213,15 @@ var convoDetailView = {id:null};
 // quiz closes) without the user being on the Practice tab any more.
 var reviewListView = {open:false};
 var reviewItemView = {id:null};
-// Which tier's list is open (reached by tapping a stat tile on the main
-// Review page): "weak" | "medium" | "strong" | null. Deliberately NOT
-// cleared when opening reviewItemView from within a tier list, so the item
-// detail's back button naturally returns to the tier list it came from
-// (reviewTierView.tier is still set); it stays null when an item is opened
-// from the main page's saved-words section, so that back button returns
-// there instead. goTab() below resets it like the other review sub-views.
-var reviewTierView = {tier:null};
+// Which stat tile (if any) is filtering the Review page's sections:
+// "weak" | "medium" | "strong" | "saved" | null (null = show all four
+// sections). This is a FILTER on renderWeakReview() itself, not a separate
+// page/view — tapping a tile just re-renders the same page scoped to that
+// one section, and tapping the same tile again clears it back to null.
+// Deliberately not reset when opening reviewItemView, so the item detail's
+// back button naturally returns to the Review page with whatever filter was
+// active. goTab() below resets it like the other review sub-views.
+var reviewActiveFilter = null;
 // True while a quiz was launched from the review list, so closeQuiz() knows
 // to return the user to the review list instead of falling through to
 // whatever tab they were on (mirrors journeyQuizStepId's handling below).
@@ -11230,7 +11242,7 @@ function goTab(tab){
   // Same for the weak/medium review sub-views (Practice tab).
   reviewListView = {open:false};
   reviewItemView = {id:null};
-  reviewTierView = {tier:null};
+  reviewActiveFilter = null;
   render();
   main.scrollTop = 0;
   window.scrollTo(0,0);
@@ -11265,7 +11277,6 @@ function render(){
     if(rvItem){ renderReviewItemDetail(rvItem); return; }
     reviewItemView.id = null;
   }
-  if(reviewTierView.tier){ renderReviewTierList(reviewTierView.tier); return; }
   if(reviewListView.open){ renderWeakReview(); return; }
   if(currentTab==="home") renderHome();
   else if(currentTab==="journey") renderJourney();
@@ -12145,17 +12156,25 @@ function reviewFilterMatch(item, q){
          (item.e && item.e.toLowerCase().indexOf(q)!==-1);
 }
 
-// Builds the "Your saved words" section for the current search query.
-// Rebuilt (not just filtered in place) on every keystroke — simplest correct
-// approach, and this list is small (well under a few hundred items). The
-// Weak/Medium/Strong tiers used to render here too but now live on their
-// own per-tier pages (renderReviewTierList), reached by tapping a stat tile.
-function buildSavedWordsSection(query){
+// Builds the review page's four sections (Saved / Weak / Medium / Strong)
+// for the current search query, scoped to a single tier when `filter` is
+// one of "weak"/"medium"/"strong"/"saved" (null/undefined = all four,
+// stacked vertically, matching the original pre-tile-navigation layout).
+// Rebuilt (not just filtered in place) on every keystroke/tile-click —
+// simplest correct approach, and this list is small (well under a few
+// hundred items).
+function buildReviewSections(query, filter){
   var wrap = el('<div style="display:flex; flex-direction:column;"></div>');
+  var pool = weakMediumPool();
+  var strongList = strongItems();
   var savedItems = VOCAB.concat(GRAMMAR_SENTENCES).filter(function(v){ return isSaved(v.id); });
 
-  function section(label, color, allItems, marginTop, emptyMsg, onRowBuilt){
+  function section(label, color, allItems, emptyMsg, onRowBuilt){
     var filtered = allItems.filter(function(it){ return reviewFilterMatch(it, query); });
+    // First section rendered into wrap gets no top margin, every section
+    // after it does — works the same whether all four sections are showing
+    // or just one (filtered), since it's based on wrap's current children.
+    var marginTop = wrap.children.length > 0;
     var sec = el('<section style="display:flex; flex-direction:column; gap:8px;'+(marginTop?' margin-top:14px;':'')+'"></section>');
     sec.appendChild(el('<div class="eyebrow"'+(color?' style="color:'+color+';"':'')+'>'+label+'</div>'));
     if(filtered.length){
@@ -12169,26 +12188,50 @@ function buildSavedWordsSection(query){
     } else {
       sec.appendChild(el('<div class="card" style="padding:12px; text-align:center;"><span class="muted" style="font-size:12px;">'+(allItems.length ? "No matches." : emptyMsg)+'</span></div>'));
     }
-    return sec;
+    wrap.appendChild(sec);
   }
 
-  // "Your saved words" — always shown (per the reference layout), even when
-  // empty, with a friendly empty note rather than being hidden outright.
-  var savedHead = el('<span style="display:flex; align-items:center; gap:6px;">&#128278; Your saved words</span>');
-  wrap.appendChild(section(savedHead.outerHTML, null, savedItems, false,
-    "Tap the star on any word to save it here.",
-    function(item, row){
-      // Unsaving from THIS section removes the row immediately, since it no
-      // longer belongs here.
-      var star = row.querySelector(".star-btn");
-      star.addEventListener("click", function(){
-        if(!isSaved(item.id)) row.remove();
-      });
-    }
-  ));
+  // "Your saved words" — always shown (per the reference layout) when not
+  // filtered to a different tier, even when empty, with a friendly empty
+  // note rather than being hidden outright.
+  if(!filter || filter==="saved"){
+    var savedHead = el('<span style="display:flex; align-items:center; gap:6px;">&#128278; Your saved words</span>');
+    section(savedHead.outerHTML, null, savedItems,
+      "Tap the star on any word to save it here.",
+      function(item, row){
+        // Unsaving from THIS section removes the row immediately, since it
+        // no longer belongs here.
+        var star = row.querySelector(".star-btn");
+        star.addEventListener("click", function(){
+          if(!isSaved(item.id)) row.remove();
+        });
+      }
+    );
+  }
+  if(!filter || filter==="weak"){
+    section("Weak", "var(--vermilion)", pool.weak, "None right now — nice work!");
+  }
+  if(!filter || filter==="medium"){
+    section("Medium", "var(--gold)", pool.medium, "None right now — nice work!");
+  }
+  if(!filter || filter==="strong"){
+    section("Strong", "var(--jade)", strongList, "Keep practicing to build up strong words.");
+  }
 
   return wrap;
 }
+
+// Metadata for the four filter tiles at the top of renderWeakReview — key
+// matches a reviewActiveFilter value, color/soft feed the tile's styling.
+// "saved" deliberately uses the app's plain/neutral tile look (no color
+// override) so it reads as a distinct 4th tile alongside the three colored
+// tiers rather than inventing a new hue.
+var REVIEW_TILE_META = [
+  {key:"weak", label:"Weak", color:"var(--vermilion)", soft:"var(--vermilion-soft)"},
+  {key:"medium", label:"Medium", color:"var(--gold)", soft:"var(--gold-soft)"},
+  {key:"strong", label:"Strong", color:"var(--jade)", soft:"var(--jade-soft)"},
+  {key:"saved", label:"Saved", color:"var(--ink)", soft:"var(--paper)"}
+];
 
 function renderWeakReview(){
   var back = el('<button class="btn ghost" style="align-self:flex-start;">&larr; Practice modes</button>');
@@ -12210,32 +12253,44 @@ function renderWeakReview(){
 
   var pool = weakMediumPool();
   var strong = strongCount();
+  var savedCount = VOCAB.concat(GRAMMAR_SENTENCES).filter(function(v){ return isSaved(v.id); }).length;
+  var counts = {weak:pool.weak.length, medium:pool.medium.length, strong:strong, saved:savedCount};
+
   var statSec = el('<section style="margin-bottom:4px;"></section>');
-  var statRow = el(
-    '<div class="stat-row">'+
-      '<button class="stat-tile" style="background:var(--vermilion-soft); border-color:var(--vermilion); cursor:pointer;"><div class="num" style="color:var(--vermilion);">'+pool.weak.length+'</div><div class="lbl">Weak</div></button>'+
-      '<button class="stat-tile" style="background:var(--gold-soft); border-color:var(--gold); cursor:pointer;"><div class="num" style="color:var(--gold);">'+pool.medium.length+'</div><div class="lbl">Medium</div></button>'+
-      '<button class="stat-tile" style="background:var(--jade-soft); border-color:var(--jade); cursor:pointer;"><div class="num" style="color:var(--jade);">'+strong+'</div><div class="lbl">Strong</div></button>'+
-    '</div>'
-  );
-  var tierBtns = statRow.querySelectorAll(".stat-tile");
-  tierBtns[0].addEventListener("click", function(){ reviewTierView.tier = "weak"; render(); });
-  tierBtns[1].addEventListener("click", function(){ reviewTierView.tier = "medium"; render(); });
-  tierBtns[2].addEventListener("click", function(){ reviewTierView.tier = "strong"; render(); });
+  var statRow = el('<div class="stat-row" style="grid-template-columns:repeat(4,1fr);"></div>');
+  REVIEW_TILE_META.forEach(function(t){
+    var active = reviewActiveFilter === t.key;
+    var style = "cursor:pointer; background:"+t.soft+"; border-color:"+t.color+";"+
+      (active ? " box-shadow:0 0 0 2px "+t.color+" inset;" : "")+
+      (reviewActiveFilter && !active ? " opacity:0.55;" : "");
+    var tile = el('<button class="stat-tile" style="'+style+'"><div class="num" style="color:'+t.color+';">'+counts[t.key]+'</div><div class="lbl">'+t.label+'</div></button>');
+    tile.addEventListener("click", function(){
+      // Tapping the already-active tile toggles the filter back off; any
+      // other tile (including a first tap) sets it as the active filter.
+      // Re-renders THIS SAME page — no navigation to a separate view.
+      reviewActiveFilter = active ? null : t.key;
+      render();
+    });
+    statRow.appendChild(tile);
+  });
   statSec.appendChild(statRow);
   main.appendChild(statSec);
 
   var listsWrap = el('<div id="reviewListsWrap" style="display:flex; flex-direction:column;"></div>');
-  listsWrap.appendChild(buildSavedWordsSection(""));
+  listsWrap.appendChild(buildReviewSections("", reviewActiveFilter));
   main.appendChild(listsWrap);
 
   var input = searchBar.querySelector("#reviewSearchInput");
   input.addEventListener("input", function(){
     var q = input.value;
     listsWrap.innerHTML = "";
-    listsWrap.appendChild(buildSavedWordsSection(q));
+    listsWrap.appendChild(buildReviewSections(q, reviewActiveFilter));
   });
 
+  // Both quiz buttons below render unconditionally, regardless of
+  // reviewActiveFilter — they are NOT nested inside the filtered-sections
+  // block above, so they stay visible and functional no matter which (if
+  // any) stat tile is active.
   var total = pool.weak.length + pool.medium.length;
   if(total>0){
     var quizN = Math.min(15, total);
@@ -12263,64 +12318,46 @@ function renderWeakReview(){
   }
 }
 
-// Per-tier list page — reached by tapping the Weak/Medium/Strong stat tile
-// on renderWeakReview. Own back button, own header, own scoped search box
-// (mirrors renderWeakReview's search bar, just filtered to this tier's
-// items), and a list of that tier's items via the same reviewRow used
-// everywhere else. reviewTierView.tier is left set while an item detail is
-// opened from a row here, so that detail's back button returns to this
-// same tier list (see the render() dispatcher and reviewTierView's comment).
-var REVIEW_TIER_META = {
-  weak: {title:"Weak words", color:"var(--vermilion)", empty:"None right now — nice work!"},
-  medium: {title:"Medium words", color:"var(--gold)", empty:"None right now — nice work!"},
-  strong: {title:"Strong words", color:"var(--jade)", empty:"Keep practicing to build up strong words."}
-};
-function renderReviewTierList(tier){
-  var meta = REVIEW_TIER_META[tier] || REVIEW_TIER_META.weak;
-  var items = tier==="weak" ? weakMediumPool().weak :
-    tier==="medium" ? weakMediumPool().medium :
-    strongItems();
-
-  var back = el('<button class="btn ghost" style="align-self:flex-start;">&larr; Review</button>');
-  back.addEventListener("click", function(){ reviewTierView.tier = null; render(); });
-  main.appendChild(back);
-
-  var sec = el('<section></section>');
-  sec.appendChild(el('<div class="section-head"><h2 style="color:'+meta.color+';">'+meta.title+'</h2></div>'));
-  main.appendChild(sec);
-
-  var searchBar = el(
-    '<div class="card" style="padding:10px 14px; display:flex; align-items:center; gap:10px; margin-bottom:12px;">'+
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px; flex-shrink:0; color:var(--mist);"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>'+
-      '<input id="reviewTierSearchInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Search" '+
-        'style="flex:1; border:none; outline:none; background:transparent; color:var(--ink); font-size:16px; font-family:inherit;">'+
-    '</div>'
-  );
-  main.appendChild(searchBar);
-
-  var listWrap = el('<div id="reviewTierListWrap"></div>');
-  main.appendChild(listWrap);
-
-  function renderList(query){
-    listWrap.innerHTML = "";
-    var filtered = items.filter(function(it){ return reviewFilterMatch(it, query); });
-    if(filtered.length){
-      var card = el('<div class="card vocab-card"></div>');
-      filtered.forEach(function(item){ card.appendChild(reviewRow(item)); });
-      listWrap.appendChild(card);
-    } else {
-      listWrap.appendChild(el('<div class="card" style="padding:14px; text-align:center;"><span class="muted" style="font-size:12.5px;">'+(items.length ? "No matches." : meta.empty)+'</span></div>'));
-    }
+// Finds a real example sentence for a review item, trying several sources in
+// order of quality and stopping at the first that produces one — never
+// fabricates Mandarin. Returns {h, p, e, label, isWord} or null.
+//   1. item.ex — a curated example sentence attached directly to VOCAB data.
+//   2. item.h.length > 6 — the item is ALREADY a full sentence (true for
+//      GRAMMAR_SENTENCES/LISTEN_FILL items, and any VERB100 aspect-example
+//      items that end up in this pool) — its own h/p/e ARE the example.
+//   3. One of the 100 common verbs (VERB100_BY_H) — use its first
+//      ("Present/habitual") aspect sentence.
+//   4. A GRAMMAR_SENTENCES/LISTEN_FILL entry whose hanzi contains item.h as
+//      a substring — same technique renderCharDetail already uses.
+//   5. A CHARACTERS item's exH/exP/exE — an example WORD, not a sentence;
+//      labeled honestly as such.
+function findReviewExample(item){
+  if(item.ex){
+    return {h:item.ex.h, p:item.ex.p, e:item.ex.e, label:"Example sentence", isWord:false};
   }
-  renderList("");
-
-  var input = searchBar.querySelector("#reviewTierSearchInput");
-  input.addEventListener("input", function(){ renderList(input.value); });
+  if(item.h && item.h.length > 6){
+    return null; // the item IS the sentence — no separate section needed
+  }
+  var verb = VERB100_BY_H[item.h];
+  if(verb && verb.s && verb.s.length){
+    var s0 = verb.s[0];
+    return {h:s0.h, p:s0.p, e:s0.e, label:"Example sentence", isWord:false};
+  }
+  var pool = GRAMMAR_SENTENCES.concat(LISTEN_FILL).filter(function(s){ return s.h.indexOf(item.h)!==-1; });
+  if(pool.length){
+    var m = pool[0];
+    return {h:m.h, p:m.p, e:m.e, label:"Example sentence", isWord:false};
+  }
+  if(item.trk==="chars" && item.exH){
+    return {h:item.exH, p:item.exP, e:item.exE, label:"Example", isWord:true};
+  }
+  return null;
 }
 
 // Individual review-item detail — a focused card (mirrors renderCharDetail's
-// "back + card" shape) showing the hanzi large with pinyin/English and an
-// audio button, reachable by tapping a row in renderWeakReview.
+// "back + card" shape) showing the hanzi large with pinyin/English, an audio
+// button, and (when one can be found) an example-sentence section, reachable
+// by tapping a row in renderWeakReview.
 function renderReviewItemDetail(item){
   var back = el('<button class="btn ghost" style="align-self:flex-start;">&larr; Back to list</button>');
   back.addEventListener("click", function(){ reviewItemView.id = null; render(); });
@@ -12336,6 +12373,25 @@ function renderReviewItemDetail(item){
   );
   card.querySelector(".speak-btn").addEventListener("click", function(){ speak(item.h); });
   main.appendChild(card);
+
+  var example = findReviewExample(item);
+  if(example){
+    var exCard = el(
+      '<div class="card" style="display:flex; flex-direction:column; gap:8px; padding:16px 18px; margin-top:14px;">'+
+        '<div class="eyebrow">'+example.label+'</div>'+
+        '<div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">'+
+          '<div>'+
+            '<div class="hanzi" style="font-size:20px;">'+example.h+'</div>'+
+            '<div style="font-size:14px; font-weight:600; margin-top:2px;">'+example.p+'</div>'+
+            '<div class="muted" style="font-size:13.5px; margin-top:2px;">'+example.e+'</div>'+
+          '</div>'+
+          '<button class="speak-btn" aria-label="Play example sentence" style="flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button>'+
+        '</div>'+
+      '</div>'
+    );
+    exCard.querySelector(".speak-btn").addEventListener("click", function(){ speak(example.h); });
+    main.appendChild(exCard);
+  }
 }
 
 /* ---------- JOURNEY ---------- */
