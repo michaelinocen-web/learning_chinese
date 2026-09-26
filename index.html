@@ -12628,6 +12628,28 @@ function journeyStepDesc(step){
   if(step.kind==="conversation") return "A short dialogue to put your recent lessons into practice — "+step.convo.title_cn+".";
   return "A short quiz on what you just covered — "+step.cats.length+" topic"+(step.cats.length===1?"":"s")+".";
 }
+// Shared row-list builder for a track's steps — used both by the "Full
+// roadmap" accordion on the main Journey screen and by the section-intro
+// step page (so the intro isn't just a bare description with nothing
+// showing what the section actually contains).
+function buildJourneyStepList(trkSteps, curStepId, completed){
+  var list = el('<div class="cat-list"></div>');
+  trkSteps.forEach(function(s){
+    var isDone = !!completed[s.id];
+    var isCurrent = s.id===curStepId;
+    var row = el(
+      '<button class="card cat-row">'+
+        '<span class="cbar" style="background:'+(isDone?"var(--jade)":(isCurrent?"var(--gold)":"var(--line)"))+';"></span>'+
+        '<span class="body"><span class="name">'+journeyStepLabel(s)+'</span><span class="sub">'+journeyStepDesc(s)+'</span></span>'+
+        '<span class="pct">'+(isDone?"✓":(isCurrent?"&rarr;":""))+'</span>'+
+        '<span class="chev">&rsaquo;</span>'+
+      '</button>'
+    );
+    row.addEventListener("click", function(){ journeyView.openStep = s.id; render(); });
+    list.appendChild(row);
+  });
+  return list;
+}
 function journeyCurrentIndex(){
   var steps = getJourneySteps();
   var completed = state.journey.completed;
@@ -12718,21 +12740,8 @@ function renderJourney(){
       '</button>'
     );
     if(open) header.classList.add("open");
-    var list = el('<div class="cat-list"'+(open?'':' hidden')+'></div>');
-    trkSteps.forEach(function(s){
-      var isDone = !!completed[s.id];
-      var isCurrent = s.id===curStep.id;
-      var row = el(
-        '<button class="card cat-row">'+
-          '<span class="cbar" style="background:'+(isDone?"var(--jade)":(isCurrent?"var(--gold)":"var(--line)"))+';"></span>'+
-          '<span class="body"><span class="name">'+journeyStepLabel(s)+'</span><span class="sub">'+journeyStepDesc(s)+'</span></span>'+
-          '<span class="pct">'+(isDone?"✓":(isCurrent?"&rarr;":""))+'</span>'+
-          '<span class="chev">&rsaquo;</span>'+
-        '</button>'
-      );
-      row.addEventListener("click", function(){ journeyView.openStep = s.id; render(); });
-      list.appendChild(row);
-    });
+    var list = buildJourneyStepList(trkSteps, curStep.id, completed);
+    if(!open) list.hidden = true;
     header.addEventListener("click", function(){
       var willOpen = list.hidden;
       list.hidden = !willOpen;
@@ -12780,6 +12789,17 @@ function renderJourneyStepDetail(step, steps, curIdx){
       render();
     });
     main.appendChild(goBtn);
+
+    // Show what's actually in this section — otherwise the intro page is
+    // just a description and a button, with no sense of the lessons ahead.
+    var trkAllSteps = steps.filter(function(s){ return s.trk===step.trk; });
+    var trkRest = trkAllSteps.filter(function(s){ return s.id!==step.id; });
+    if(trkRest.length){
+      var previewSec = el('<section style="margin-top:8px;"></section>');
+      previewSec.appendChild(el('<div class="section-head"><h2>In this section</h2><span class="pill">'+trkRest.length+' step'+(trkRest.length===1?"":"s")+'</span></div>'));
+      previewSec.appendChild(buildJourneyStepList(trkRest, step.id, state.journey.completed));
+      main.appendChild(previewSec);
+    }
     return;
   }
 
